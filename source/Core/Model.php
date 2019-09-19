@@ -122,25 +122,26 @@ abstract class Model
      * @param string $colums
      * @return Model|mixed
      */
-    public function find(?string $terms = null, ?string $params = null, string $colums = "*")
+    public function find(?string $terms = null, ?string $params = null, string $columns = "*")
     {
         if ($terms) {
-            $this->query = "SELECT {$colums} FROM " . static::$entity . " WHERE {$terms}";
+            $this->query = "SELECT {$columns} FROM " . static::$entity . " WHERE {$terms}";
             parse_str($params, $this->params);
             return $this;
         }
 
-        $this->query = "SELECT {$colums} FROM " . static::$entity;
+        $this->query = "SELECT {$columns} FROM " . static::$entity;
         return $this;
     }
 
     /**
-     * @param string $columOrder
+     * @param string $columnOrder
      * @return Model
      */
-    public function order(string $columOrder): Model
+    public function order(string $columnOrder): Model
     {
-        $this->order = " ORDER BY {$columOrder} ";
+        $this->order = " ORDER BY {$columnOrder}";
+        return $this;
     }
 
     /**
@@ -149,7 +150,8 @@ abstract class Model
      */
     public function limit(int $limit): Model
     {
-        $this->limit = " LIMIT {$limit} ";
+        $this->limit = " LIMIT {$limit}";
+        return $this;
     }
 
     /**
@@ -158,9 +160,9 @@ abstract class Model
      */
     public function offset(int $offset): Model
     {
-        $this->offset = " LIMIT {$offset} ";
+        $this->offset = " OFFSET {$offset}";
+        return $this;
     }
-
 
     /**
      * @param bool $all
@@ -169,7 +171,7 @@ abstract class Model
     public function fetch(bool $all = false)
     {
         try {
-            $stmt = Connect::getInstance()->prepare($this->query . $this->order . $this->limit . $this->order);
+            $stmt = Connect::getInstance()->prepare($this->query . $this->order . $this->limit . $this->offset);
             $stmt->execute($this->params);
 
             if (!$stmt->rowCount()) {
@@ -181,7 +183,6 @@ abstract class Model
             }
 
             return $stmt->fetchObject(static::class);
-
         } catch (\PDOException $exception) {
             $this->fail = $exception;
             return null;
@@ -250,7 +251,7 @@ abstract class Model
      * @param string $value
      * @return bool
      */
-    protected function delete(string $key, string $value): bool
+    public function delete(string $key, string $value): bool
     {
         try {
             $stmt = Connect::getInstance()->prepare("DELETE FROM " . static::$entity . " WHERE {$key} = :key");
@@ -259,7 +260,7 @@ abstract class Model
             return true;
         } catch (\PDOException $exception) {
             $this->fail = $exception;
-            return null;
+            return false;
         }
     }
 

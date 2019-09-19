@@ -6,6 +6,7 @@ namespace Source\App;
 
 use Source\Core\Connect;
 use Source\Core\Controller;
+use Source\Models\User;
 use Source\Support\Pager;
 
 /**
@@ -27,6 +28,11 @@ class Web extends Controller
      */
     public function home(): void
     {
+        $user = (new User())->findByEmail("rogerio22ricardo@gmail.com");
+        $user->document = 13412313124;
+        $user->save();
+        var_dump($user);
+
         $head = $this->seo->render(
             CONF_SITE_NAME . " - " . CONF_SITE_TITLE,
             CONF_SITE_DESC,
