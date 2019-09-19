@@ -152,6 +152,40 @@ class Web extends Controller
     }
 
     /**
+     * SITE OPT-IN CONFIRM
+     */
+    public function confirm(): void
+    {
+        $head = $this->seo->render(
+            "Confirme Seu Cdastro - " . CONF_SITE_NAME,
+            CONF_SITE_DESC,
+            url("/confirma"),
+            theme("/assets/images/share.jps")
+        );
+
+        echo $this->view->render("optin-confirm", [
+            "head" => $head
+        ]);
+    }
+
+    /**
+     * SITE OPT-IN SUCCESS
+     */
+    public function success(): void
+    {
+        $head = $this->seo->render(
+            "Bem-vindo(a) ao " . CONF_SITE_NAME,
+            CONF_SITE_DESC,
+            url("/obrigado"),
+            theme("/assets/images/share.jps")
+        );
+
+        echo $this->view->render("optin-success", [
+            "head" => $head
+        ]);
+    }
+
+    /**
      * SITE TERMS
      */
     public function terms(): void
