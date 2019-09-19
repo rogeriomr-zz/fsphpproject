@@ -6,6 +6,8 @@ namespace Source\App;
 
 use Source\Core\Connect;
 use Source\Core\Controller;
+use Source\Models\Faq\Channel;
+use Source\Models\Faq\Question;
 use Source\Models\User;
 use Source\Support\Pager;
 
@@ -28,11 +30,6 @@ class Web extends Controller
      */
     public function home(): void
     {
-        $user = (new User())->findByEmail("rogerio22ricardo@gmail.com");
-        $user->document = 13412313124;
-        $user->save();
-        var_dump($user);
-
         $head = $this->seo->render(
             CONF_SITE_NAME . " - " . CONF_SITE_TITLE,
             CONF_SITE_DESC,
@@ -60,7 +57,11 @@ class Web extends Controller
 
         echo $this->view->render("about", [
             "head" => $head,
-            "video" => "lDZGl9Wdc7Y"
+            "video" => "lDZGl9Wdc7Y",
+            "faq" => (new Question())
+                ->find("channel_id = :id", "id=1", "question, response")
+                ->order("order_by")
+                ->fetch(true)
         ]);
     }
 
