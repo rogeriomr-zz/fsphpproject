@@ -80,7 +80,7 @@ class Web extends Controller
     }
 
     /**
-     * SITE POST BLOG
+     * SITE BLOG POST
      * @param array $data
      */
     public function blogPost(array $data): void
@@ -97,6 +97,57 @@ class Web extends Controller
         echo $this->view->render("blog-POST", [
             "head" => $head,
             "data" => $this->seo->data()
+        ]);
+    }
+
+    /**
+     * SITE AUTH-LOGIN
+     */
+    public function login(): void
+    {
+        $head = $this->seo->render(
+            "Entrar - " . CONF_SITE_NAME,
+            CONF_SITE_DESC,
+            url("/entrar"),
+            theme("/assets/images/share.jps")
+        );
+
+        echo $this->view->render("auth-login", [
+            "head" => $head
+        ]);
+    }
+
+    /**
+     * SITE AUTH-FORGET
+     */
+    public function forget(): void
+    {
+        $head = $this->seo->render(
+            "Recuperar Senha - " . CONF_SITE_NAME,
+            CONF_SITE_DESC,
+            url("/recuperar"),
+            theme("/assets/images/share.jps")
+        );
+
+        echo $this->view->render("auth-forget", [
+            "head" => $head
+        ]);
+    }
+
+    /**
+     * SITE AUTH-REGISTER
+     */
+    public function register(): void
+    {
+        $head = $this->seo->render(
+            "Criar Conta - " . CONF_SITE_NAME,
+            CONF_SITE_DESC,
+            url("/cadastrar"),
+            theme("/assets/images/share.jps")
+        );
+
+        echo $this->view->render("auth-register", [
+            "head" => $head
         ]);
     }
 
