@@ -90,6 +90,7 @@ define("CONF_MAIL_PORT", "587");
 define("CONF_MAIL_USER", "apikey");
 define("CONF_MAIL_PASS", "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");
 define("CONF_MAIL_SENDER", ["name" => "Rogerio Mateus Ricardo", "address" => "rogerio22ricardo@gmail.com"]);
+define("CONF_MAIL_SUPPORT", "cursos@upinside.com.br");
 define("CONF_MAIL_OPTION_LANG", "br");
 define("CONF_MAIL_OPTION_HTML", true);
 define("CONF_MAIL_OPTION_AUTH", true);
