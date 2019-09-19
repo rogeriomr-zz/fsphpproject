@@ -6,7 +6,7 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitd0ccecf323efd3f4f0c8456fa7297b6f
 {
-    public static $files = array(
+    public static $files = array (
         'e471bf351add62873bc0289ccd6a937f' => __DIR__ . '/..' . '/league/plates/src/Template/match.php',
         '152c98af9456eeb8f53697d6a7dfd689' => __DIR__ . '/..' . '/league/plates/src/Extension/Data/data.php',
         'e20239a76b73b9912f51f0005956d1db' => __DIR__ . '/..' . '/league/plates/src/Extension/Path/path.php',
@@ -19,57 +19,62 @@ class ComposerStaticInitd0ccecf323efd3f4f0c8456fa7297b6f
         'efe733e5c171b37e876953af9e3d9ed1' => __DIR__ . '/../..' . '/source/Support/Helpers.php',
     );
 
-    public static $prefixLengthsPsr4 = array(
-        'S' =>
-            array(
-                'Source\\' => 7,
-            ),
-        'P' =>
-            array(
-                'PHPMailer\\PHPMailer\\' => 20,
-            ),
-        'L' =>
-            array(
-                'League\\Plates\\' => 14,
-            ),
-        'C' =>
-            array(
-                'CoffeeCode\\Uploader\\' => 20,
-                'CoffeeCode\\Paginator\\' => 21,
-                'CoffeeCode\\Optimizer\\' => 21,
-                'CoffeeCode\\Cropper\\' => 19,
-            ),
+    public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Source\\' => 7,
+        ),
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'L' => 
+        array (
+            'League\\Plates\\' => 14,
+        ),
+        'C' => 
+        array (
+            'CoffeeCode\\Uploader\\' => 20,
+            'CoffeeCode\\Router\\' => 18,
+            'CoffeeCode\\Paginator\\' => 21,
+            'CoffeeCode\\Optimizer\\' => 21,
+            'CoffeeCode\\Cropper\\' => 19,
+        ),
     );
 
-    public static $prefixDirsPsr4 = array(
-        'Source\\' =>
-            array(
-                0 => __DIR__ . '/../..' . '/source',
-            ),
-        'PHPMailer\\PHPMailer\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
-            ),
-        'League\\Plates\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/league/plates/src',
-            ),
-        'CoffeeCode\\Uploader\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/coffeecode/uploader/src',
-            ),
-        'CoffeeCode\\Paginator\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/coffeecode/paginator/src',
-            ),
-        'CoffeeCode\\Optimizer\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/coffeecode/optimizer/src',
-            ),
-        'CoffeeCode\\Cropper\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/coffeecode/cropper/src',
-            ),
+    public static $prefixDirsPsr4 = array (
+        'Source\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/source',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'League\\Plates\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/plates/src',
+        ),
+        'CoffeeCode\\Uploader\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/coffeecode/uploader/src',
+        ),
+        'CoffeeCode\\Router\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/coffeecode/router/src',
+        ),
+        'CoffeeCode\\Paginator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/coffeecode/paginator/src',
+        ),
+        'CoffeeCode\\Optimizer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/coffeecode/optimizer/src',
+        ),
+        'CoffeeCode\\Cropper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/coffeecode/cropper/src',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)

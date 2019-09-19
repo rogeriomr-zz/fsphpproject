@@ -10,7 +10,8 @@ define("CONF_DB_NAME", "fullstackphp");
 /**
  * PROJECT URLs
  */
-define("CONF_URL_BASE", "https://localhost/fsphpproject");
+define("CONF_URL_BASE", "https://www.cafecontrol.com.br");
+define("CONF_URL_TEST", "https://localhost/fsphpproject");
 define("CONF_URL_ADMIN", "/admin");
 
 /**
@@ -30,6 +31,8 @@ define("CONF_SOCIAL_FACEBOOK_PAGE", "upinside");
 define("CONF_SOCIAL_FACEBOOK_AUTHOR", "RogerioMateusRicardo");
 define("CONF_SOCIAL_GOOGLE_PAGE", "107305124528362639842");
 define("CONF_SOCIAL_GOOGLE_AUTHOR", "103958419096641225872");
+define("CONF_SOCIAL_INSTAGRAM_PAGE", "rogeriomr");
+define("CONF_SOCIAL_YOUTUBE_PAGE", "upinside");
 
 /**
  * DATES
@@ -59,6 +62,7 @@ define("CONF_MESSAGE_ERROR", "error");
  */
 define("CONF_VIEW_PATH", __DIR__ . "/../../shared/views");
 define("CONF_VIEW_EXT", "php");
+define("CONF_VIEW_THEME", "cafecontrol");
 
 /**
  * UPLOAD
