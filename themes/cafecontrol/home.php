@@ -1,4 +1,4 @@
-<?php $v->layout("theme") ?>
+<?php $v->layout("_theme"); ?>
 
 <!--FEATURED-->
 <article class="home_featured">
@@ -8,8 +8,8 @@
             <p>Cadastre-se, lance suas contas e conte com automações poderosas para gerenciar tudo enquanto você toma um
                 bom café!</p>
             <p><span data-go=".home_optin"
-                     class="home_featured_btn gradient gradient-green gradient-hover radius transition icon-check-square-o">Criar minha conta e começar a controlar</span>
-            </p>
+                     class="home_featured_btn gradient gradient-green gradient-hover radius transition icon-check-square-o">Criar
+                    minha conta e começar a controlar</span></p>
             <p class="features">Rápido | Simples | Gratuito</p>
         </header>
     </div>
@@ -76,7 +76,7 @@
         <div class="home_optin_content_flex">
             <span class="icon icon-check-square-o icon-notext"></span>
             <h4>Crie sua conta gratuitamente:</h4>
-            <form action="<?= url("cadastro"); ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= url("/cadastrar"); ?>" method="post" enctype="multipart/form-data">
                 <input type="text" name="first_name" placeholder="Primeiro nome:"/>
                 <input type="text" name="last_name" placeholder="Último nome:"/>
                 <input type="email" name="email" placeholder="Melhor e-mail:"/>
@@ -99,7 +99,7 @@
     <div class="home_video_modal j_modal_close">
         <div class="home_video_modal_box">
             <div class="embed">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/lDZGl9Wdc7Y?rel=0&amp;showinfo=0"
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $video; ?>?rel=0&amp;showinfo=0"
                         frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
         </div>
@@ -116,7 +116,7 @@
 
         <div class="blog_articles">
             <?php for ($i = 0; $i <= 5; $i++): ?>
-                <?php $v->insert("views/blog-post") ?>
+                <?php $v->insert("blog-list"); ?>
             <?php endfor; ?>
         </div>
     </div>

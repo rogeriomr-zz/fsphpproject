@@ -15,8 +15,9 @@ class ComposerStaticInitd0ccecf323efd3f4f0c8456fa7297b6f
         'bdc465a053da7f7ddb072631f6d41d45' => __DIR__ . '/..' . '/league/plates/src/Extension/LayoutSections/layout-sections.php',
         'afa76803f24616d7599be3b7b0846adc' => __DIR__ . '/..' . '/league/plates/src/Extension/Folders/folders.php',
         '16c5be35e32c6cf916d875518b909210' => __DIR__ . '/..' . '/league/plates/src/Util/util.php',
-        'dfa9b733d794410c023e9f1526d0ab40' => __DIR__ . '/../..' . '/source/Support/Config.php',
-        'efe733e5c171b37e876953af9e3d9ed1' => __DIR__ . '/../..' . '/source/Support/Helpers.php',
+        '2e936e69927f30bada5100213d6564b5' => __DIR__ . '/../..' . '/source/Boot/Config.php',
+        '14811e05f27af001e4b56a83b92b979f' => __DIR__ . '/../..' . '/source/Boot/Helpers.php',
+        '64bd0fa5350f50b6a71b9a1c802234b0' => __DIR__ . '/../..' . '/source/Boot/Minify.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -27,6 +28,11 @@ class ComposerStaticInitd0ccecf323efd3f4f0c8456fa7297b6f
         'P' => 
         array (
             'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'M' => 
+        array (
+            'MatthiasMullie\\PathConverter\\' => 29,
+            'MatthiasMullie\\Minify\\' => 22,
         ),
         'L' => 
         array (
@@ -50,6 +56,14 @@ class ComposerStaticInitd0ccecf323efd3f4f0c8456fa7297b6f
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'MatthiasMullie\\PathConverter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/matthiasmullie/path-converter/src',
+        ),
+        'MatthiasMullie\\Minify\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/matthiasmullie/minify/src',
         ),
         'League\\Plates\\' => 
         array (
