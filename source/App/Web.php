@@ -6,8 +6,10 @@ namespace Source\App;
 
 use Source\Core\Connect;
 use Source\Core\Controller;
+use Source\Models\Category;
 use Source\Models\Faq\Channel;
 use Source\Models\Faq\Question;
+use Source\Models\Post;
 use Source\Models\User;
 use Source\Support\Pager;
 
