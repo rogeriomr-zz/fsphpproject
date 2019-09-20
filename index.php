@@ -31,6 +31,7 @@ $route->get("/buscar/{terms}/{page}", "Web:blogSearch");
 //auth
 $route->group(null);
 $route->get("/entrar", "Web:login");
+$route->post("/entrar", "Web:login");
 
 $route->get("/cadastrar", "Web:register");
 $route->post("/cadastrar", "Web:register");
@@ -43,6 +44,13 @@ $route->get("/obrigado/{email}", "Web:success");
 
 //services
 $route->get("/termos", "Web:terms");
+
+/**
+ * APP
+ */
+$route->group("/app");
+$route->get("/", "App:home");
+$route->get("/sair", "App:logout");
 
 /*
  * ERROR ROUTES
