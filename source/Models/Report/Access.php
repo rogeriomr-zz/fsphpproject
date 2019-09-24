@@ -5,13 +5,23 @@ namespace Source\Models\Report;
 use Source\Core\Model;
 use Source\Core\Session;
 
+/**
+ * Class Online
+ * @package Source\Models\Report
+ */
 class Access extends Model
 {
+    /**
+     * Access constructor
+     */
     public function __construct()
     {
         parent::__construct("report_access", ["id"], ["users", "views", "pages"]);
     }
 
+    /**
+     * @return Access
+     */
     public function report(): Access
     {
         $find = $this->find("date(created_at) = DATE(now())")->fetch();
@@ -44,6 +54,9 @@ class Access extends Model
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function save(): bool
     {
         /** Update Access */
