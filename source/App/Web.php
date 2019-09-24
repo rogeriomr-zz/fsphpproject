@@ -5,6 +5,7 @@ namespace Source\App;
 
 use Source\Core\Connect;
 use Source\Core\Controller;
+use Source\Models\Report\Access;
 use Source\Models\Auth;
 use Source\Models\Category;
 use Source\Models\Faq\Channel;
@@ -27,13 +28,7 @@ class Web extends Controller
     {
         parent::__construct(__DIR__ . "/../../themes/" . CONF_VIEW_THEME . "/");
 
-        $email = new Email();
-        $email->bootstrap(
-            "Teste de fila de e-mail " . time(),
-            "Este é apenas um teste de envio de email",
-            "rogeriomr2203@gmail.com",
-            "Rogerio Mateus Ricardo"
-        )->sendQueue();
+        (new Access())->report();
     }
 
     /**
