@@ -135,7 +135,6 @@ $(function () {
                     window.location.href = response.redirect;
                 } else {
                     load.fadeOut(200);
-                    (200);
                 }
 
                 //reload

@@ -366,7 +366,7 @@ function flash(): ?string
  */
 function request_limit(string $key, int $limit = 5, int $seconds = 60): bool
 {
-    $session = new \Source\Core\Session();
+    $session = new Session();
     if ($session->has($key) && $session->$key->time >= time() && $session->$key->requests < $limit) {
         $session->set($key, [
             "time" => time() + $seconds,
