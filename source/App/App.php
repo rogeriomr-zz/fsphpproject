@@ -37,11 +37,13 @@ class App extends Controller
 
         (new Access())->report();
         (new Online())->report();
+
+        (new AppInvoice())->fixed($this->user, 3);
     }
 
     /**
-     * APP HOME
-     */
+       * APP HOME
+       */
     public function home(): void
     {
         $head = $this->seo->render(
@@ -64,7 +66,8 @@ class App extends Controller
         $chartData->income = "0,0,0,0,0";
 
         $chart = (new AppInvoice())
-            ->find("user_id = :user AND status = :status AND due_at >= DATE(now() - INTERVAL 4 MONTH) GROUP BY year(due_at) ASC, month(due_at) ASC",
+            ->find(
+                "user_id = :user AND status = :status AND due_at >= DATE(now() - INTERVAL 4 MONTH) GROUP BY year(due_at) ASC, month(due_at) ASC",
                 "user={$this->user->id}&status=paid",
                 "
                     year(due_at) AS due_year,
@@ -94,25 +97,31 @@ class App extends Controller
 
         //INCOME && EXPENSE
         $income = (new AppInvoice())
-            ->find("user_id = :user AND type = 'income' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH)",
-                "user={$this->user->id}")
+            ->find(
+                "user_id = :user AND type = 'income' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH)",
+                "user={$this->user->id}"
+            )
             ->order("due_at")
             ->fetch(true);
 
         $expense = (new AppInvoice())
-            ->find("user_id = :user AND type = 'expense' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH)",
-                "user={$this->user->id}")
+            ->find(
+                "user_id = :user AND type = 'expense' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH)",
+                "user={$this->user->id}"
+            )
             ->order("due_at")
             ->fetch(true);
         //END INCOME && EXPENSE
 
         //WALLET
-        $wallet = (new AppInvoice())->find("user_id = :user AND status = :status",
+        $wallet = (new AppInvoice())->find(
+            "user_id = :user AND status = :status",
             "user={$this->user->id}&status=paid",
             "
                 (SELECT SUM(value) FROM app_invoices WHERE user_id = :user AND status = :status AND type = 'income') AS income,
                 (SELECT SUM(value) FROM app_invoices WHERE user_id = :user AND status = :status AND type = 'expense') AS expense
-            ")->fetch();
+            "
+        )->fetch();
 
         if ($wallet) {
             $wallet->wallet = $wallet->income - $wallet->expense;
@@ -134,11 +143,31 @@ class App extends Controller
     }
 
     /**
-     * @param array $data
-     */
-    public function filter(array $data)
+    * @param array $data
+    * @throws \Exception
+    */
+    public function filter(array $data): void
     {
-        var_dump($data);
+        $status = (!empty($data["status"]) ? $data["status"] : "all");
+        $category = (!empty($data["category"]) ? $data["category"] : "all");
+        $date = (!empty($data["date"]) ? $data["date"] : date("m/Y"));
+
+        list($m, $y) = explode("/", $date);
+        $m = ($m >= 1 && $m <= 12 ? $m : date("m"));
+        $y = ($y <= date("Y", strtotime("+10year")) ? $y : date("Y", strtotime("+10year")));
+
+        $start = new \DateTime(date("Y-m-t"));
+        $end = new \DateTime(date("Y-m-t", strtotime("{$y}-{$m}+1month")));
+        $diff = $start->diff($end);
+
+        if (!$diff->invert) {
+            $afterMonths = (floor($diff->days / 30));
+            (new AppInvoice())->fixed($this->user, $afterMonths);
+        }
+
+        $redirect = ($data["filter"] == "income" ? "receber" : "pagar");
+        $json["redirect"] = url("/app/{$redirect}/{$status}/{$category}/{$m}-{$y}");
+        echo json_encode($json);
     }
 
     /**
@@ -157,7 +186,7 @@ class App extends Controller
         $categories = (new AppCategory())
             ->find("type = :t", "t=income", "id, name")
             ->order("order_by, name")
-            ->fetch("true");
+            ->fetch(true);
 
         echo $this->view->render("invoices", [
             "user" => $this->user,
@@ -189,7 +218,7 @@ class App extends Controller
         $categories = (new AppCategory())
             ->find("type = :t", "t=expense", "id, name")
             ->order("order_by, name")
-            ->fetch("true");
+            ->fetch(true);
 
         echo $this->view->render("invoices", [
             "user" => $this->user,

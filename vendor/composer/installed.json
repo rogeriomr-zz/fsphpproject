@@ -147,23 +147,23 @@
     },
     {
         "name": "coffeecode/router",
-        "version": "1.0.5",
-        "version_normalized": "1.0.5.0",
+        "version": "1.0.6",
+        "version_normalized": "1.0.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/robsonvleite/router.git",
-            "reference": "20a98f33337d1af66810568b39d11895e35499ac"
+            "reference": "1cfcddae9d4424efbfe02822893ffedd2d06ac66"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/robsonvleite/router/zipball/20a98f33337d1af66810568b39d11895e35499ac",
-            "reference": "20a98f33337d1af66810568b39d11895e35499ac",
+            "url": "https://api.github.com/repos/robsonvleite/router/zipball/1cfcddae9d4424efbfe02822893ffedd2d06ac66",
+            "reference": "1cfcddae9d4424efbfe02822893ffedd2d06ac66",
             "shasum": ""
         },
         "require": {
             "php": "^7.2"
         },
-        "time": "2019-07-24T12:23:39+00:00",
+        "time": "2019-09-25T23:15:05+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

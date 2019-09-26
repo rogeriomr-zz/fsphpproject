@@ -1,509 +1,509 @@
 {
-  "_readme": [
-    "This file locks the dependencies of your project to a known state",
-    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-    "This file is @generated automatically"
-  ],
-  "content-hash": "29ced67f4630ac2230eac7d5f58e81d3",
-  "packages": [
-    {
-      "name": "coffeecode/cropper",
-      "version": "1.2.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/robsonvleite/cropper.git",
-        "reference": "b18bc379dde6523da12a4539aac2dc65ea56b9e7"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/robsonvleite/cropper/zipball/b18bc379dde6523da12a4539aac2dc65ea56b9e7",
-        "reference": "b18bc379dde6523da12a4539aac2dc65ea56b9e7",
-        "shasum": ""
-      },
-      "require": {
-        "ext-fileinfo": "*",
-        "ext-gd": "*",
-        "php": "^7.2"
-      },
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "CoffeeCode\\Cropper\\": "src"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
-      "authors": [
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "29ced67f4630ac2230eac7d5f58e81d3",
+    "packages": [
         {
-          "name": "Robson V. Leite",
-          "email": "cursos@upinside.com.br",
-          "role": "Developer"
-        }
-      ],
-      "description": "It is a easy and simple PHP image cropper and cache thumb manager",
-      "homepage": "http://www.upinside.com.br",
-      "keywords": [
-        "Coffeecode",
-        "image cache",
-        "image crop",
-        "image thumb",
-        "upload"
-      ],
-      "time": "2019-07-05T22:01:25+00:00"
-    },
-    {
-      "name": "coffeecode/optimizer",
-      "version": "1.0.2",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/robsonvleite/optimizer.git",
-        "reference": "23d3a65cc8210ce6febec4701a5108cdf8b4674b"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/robsonvleite/optimizer/zipball/23d3a65cc8210ce6febec4701a5108cdf8b4674b",
-        "reference": "23d3a65cc8210ce6febec4701a5108cdf8b4674b",
-        "shasum": ""
-      },
-      "require": {
-        "ext-simplexml": "*",
-        "php": "^7.2"
-      },
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "CoffeeCode\\Optimizer\\": "src"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
-      "authors": [
-        {
-          "name": "Robson V. Leite",
-          "email": "cursos@upinside.com.br",
-          "role": "Developer"
-        }
-      ],
-      "description": "Optimizer makes it easy to bookmark your site tags, open graph and twitter card",
-      "homepage": "http://www.upinside.com.br",
-      "keywords": [
-        "Coffeecode",
-        "Facebook Tags",
-        "SMO",
-        "meta tags",
-        "open graph",
-        "seo",
-        "twitter card",
-        "upinside"
-      ],
-      "time": "2019-03-12T14:37:11+00:00"
-    },
-    {
-      "name": "coffeecode/paginator",
-      "version": "1.0.4",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/robsonvleite/paginator.git",
-        "reference": "98b6a42ab7ee4a9ec08faa37e5cfb0a073143d2d"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/robsonvleite/paginator/zipball/98b6a42ab7ee4a9ec08faa37e5cfb0a073143d2d",
-        "reference": "98b6a42ab7ee4a9ec08faa37e5cfb0a073143d2d",
-        "shasum": ""
-      },
-      "require": {
-        "php": "^7.2"
-      },
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "CoffeeCode\\Paginator\\": "src"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
-      "authors": [
-        {
-          "name": "Robson V. Leite",
-          "email": "cursos@upinside.com.br",
-          "role": "Developer"
-        }
-      ],
-      "description": "Paginator is simple and is ready to generate results navigation in your application",
-      "homepage": "http://www.upinside.com.br",
-      "keywords": [
-        "Coffeecode",
-        "pagination",
-        "paginator",
-        "upinside"
-      ],
-      "time": "2019-03-12T14:38:13+00:00"
-    },
-    {
-      "name": "coffeecode/router",
-      "version": "1.0.5",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/robsonvleite/router.git",
-        "reference": "20a98f33337d1af66810568b39d11895e35499ac"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/robsonvleite/router/zipball/20a98f33337d1af66810568b39d11895e35499ac",
-        "reference": "20a98f33337d1af66810568b39d11895e35499ac",
-        "shasum": ""
-      },
-      "require": {
-        "php": "^7.2"
-      },
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "CoffeeCode\\Router\\": "src"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
-      "authors": [
-        {
-          "name": "Robson V. Leite",
-          "email": "cursos@upinside.com.br",
-          "role": "Developer"
-        }
-      ],
-      "description": "A classic CoffeeCode Router is easy, fast and extremely uncomplicated. Create and manage your routes in minutes!",
-      "homepage": "http://www.upinside.com.br",
-      "keywords": [
-        "Coffeecode",
-        "route",
-        "router",
-        "routes",
-        "upinside"
-      ],
-      "time": "2019-07-24T12:23:39+00:00"
-    },
-    {
-      "name": "coffeecode/uploader",
-      "version": "1.0.7",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/robsonvleite/uploader.git",
-        "reference": "3117d7e8a77f97a2a20b5aa1f11f6a625d23b14c"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/robsonvleite/uploader/zipball/3117d7e8a77f97a2a20b5aa1f11f6a625d23b14c",
-        "reference": "3117d7e8a77f97a2a20b5aa1f11f6a625d23b14c",
-        "shasum": ""
-      },
-      "require": {
-        "ext-exif": "*",
-        "ext-gd": "*",
-        "ext-mbstring": "*",
-        "php": "^7.2"
-      },
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "CoffeeCode\\Uploader\\": "src"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
-      "authors": [
-        {
-          "name": "Robson V. Leite",
-          "email": "cursos@upinside.com.br",
-          "role": "Developer"
+            "name": "coffeecode/cropper",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robsonvleite/cropper.git",
+                "reference": "b18bc379dde6523da12a4539aac2dc65ea56b9e7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robsonvleite/cropper/zipball/b18bc379dde6523da12a4539aac2dc65ea56b9e7",
+                "reference": "b18bc379dde6523da12a4539aac2dc65ea56b9e7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "ext-gd": "*",
+                "php": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CoffeeCode\\Cropper\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robson V. Leite",
+                    "email": "cursos@upinside.com.br",
+                    "role": "Developer"
+                }
+            ],
+            "description": "It is a easy and simple PHP image cropper and cache thumb manager",
+            "homepage": "http://www.upinside.com.br",
+            "keywords": [
+                "Coffeecode",
+                "image cache",
+                "image crop",
+                "image thumb",
+                "upload"
+            ],
+            "time": "2019-07-05T22:01:25+00:00"
         },
         {
-          "name": "Tiago Chini",
-          "email": "tiago.chini@hotmail.com",
-          "role": "collaborator"
+            "name": "coffeecode/optimizer",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robsonvleite/optimizer.git",
+                "reference": "23d3a65cc8210ce6febec4701a5108cdf8b4674b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robsonvleite/optimizer/zipball/23d3a65cc8210ce6febec4701a5108cdf8b4674b",
+                "reference": "23d3a65cc8210ce6febec4701a5108cdf8b4674b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "php": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CoffeeCode\\Optimizer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robson V. Leite",
+                    "email": "cursos@upinside.com.br",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Optimizer makes it easy to bookmark your site tags, open graph and twitter card",
+            "homepage": "http://www.upinside.com.br",
+            "keywords": [
+                "Coffeecode",
+                "Facebook Tags",
+                "SMO",
+                "meta tags",
+                "open graph",
+                "seo",
+                "twitter card",
+                "upinside"
+            ],
+            "time": "2019-03-12T14:37:11+00:00"
+        },
+        {
+            "name": "coffeecode/paginator",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robsonvleite/paginator.git",
+                "reference": "98b6a42ab7ee4a9ec08faa37e5cfb0a073143d2d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robsonvleite/paginator/zipball/98b6a42ab7ee4a9ec08faa37e5cfb0a073143d2d",
+                "reference": "98b6a42ab7ee4a9ec08faa37e5cfb0a073143d2d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CoffeeCode\\Paginator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robson V. Leite",
+                    "email": "cursos@upinside.com.br",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Paginator is simple and is ready to generate results navigation in your application",
+            "homepage": "http://www.upinside.com.br",
+            "keywords": [
+                "Coffeecode",
+                "pagination",
+                "paginator",
+                "upinside"
+            ],
+            "time": "2019-03-12T14:38:13+00:00"
+        },
+        {
+            "name": "coffeecode/router",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robsonvleite/router.git",
+                "reference": "1cfcddae9d4424efbfe02822893ffedd2d06ac66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robsonvleite/router/zipball/1cfcddae9d4424efbfe02822893ffedd2d06ac66",
+                "reference": "1cfcddae9d4424efbfe02822893ffedd2d06ac66",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CoffeeCode\\Router\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robson V. Leite",
+                    "email": "cursos@upinside.com.br",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A classic CoffeeCode Router is easy, fast and extremely uncomplicated. Create and manage your routes in minutes!",
+            "homepage": "http://www.upinside.com.br",
+            "keywords": [
+                "Coffeecode",
+                "route",
+                "router",
+                "routes",
+                "upinside"
+            ],
+            "time": "2019-09-25T23:15:05+00:00"
+        },
+        {
+            "name": "coffeecode/uploader",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robsonvleite/uploader.git",
+                "reference": "3117d7e8a77f97a2a20b5aa1f11f6a625d23b14c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robsonvleite/uploader/zipball/3117d7e8a77f97a2a20b5aa1f11f6a625d23b14c",
+                "reference": "3117d7e8a77f97a2a20b5aa1f11f6a625d23b14c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-exif": "*",
+                "ext-gd": "*",
+                "ext-mbstring": "*",
+                "php": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CoffeeCode\\Uploader\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robson V. Leite",
+                    "email": "cursos@upinside.com.br",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tiago Chini",
+                    "email": "tiago.chini@hotmail.com",
+                    "role": "collaborator"
+                }
+            ],
+            "description": "It is a easy PHP upload manager for images, files and media in your application",
+            "homepage": "http://www.upinside.com.br",
+            "keywords": [
+                "Coffeecode",
+                "Image upload",
+                "file upload",
+                "media upload",
+                "upinside",
+                "upload"
+            ],
+            "time": "2019-07-08T23:06:18+00:00"
+        },
+        {
+            "name": "league/plates",
+            "version": "v4.0.0-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/plates.git",
+                "reference": "f53f4c1fa4bf307d0f3858a348172ff4faf7669a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/plates/zipball/f53f4c1fa4bf307d0f3858a348172ff4faf7669a",
+                "reference": "f53f4c1fa4bf307d0f3858a348172ff4faf7669a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "eloquent/phony-peridot": "^2.0",
+                "peridot-php/leo": "^1.6",
+                "peridot-php/peridot": "^1.19",
+                "peridot-php/peridot-code-coverage-reporters": "^3.0",
+                "squizlabs/php_codesniffer": "~1.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Plates\\": "src"
+                },
+                "files": [
+                    "src/Template/match.php",
+                    "src/Extension/Data/data.php",
+                    "src/Extension/Path/path.php",
+                    "src/Extension/RenderContext/func.php",
+                    "src/Extension/RenderContext/render-context.php",
+                    "src/Extension/LayoutSections/layout-sections.php",
+                    "src/Extension/Folders/folders.php",
+                    "src/Util/util.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Reinink",
+                    "email": "jonathan@reinink.ca",
+                    "role": "Developer"
+                },
+                {
+                    "name": "RJ Garcia",
+                    "email": "rj@bighead.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Plates, the native PHP template system that's fast, easy to use and easy to extend.",
+            "homepage": "http://platesphp.com",
+            "keywords": [
+                "league",
+                "package",
+                "templates",
+                "templating",
+                "views"
+            ],
+            "time": "2018-01-31T07:20:23+00:00"
+        },
+        {
+            "name": "matthiasmullie/minify",
+            "version": "1.3.61",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/minify.git",
+                "reference": "d5acb8ce5b6acb7d11bafe97cecc533f6e4fd751"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/d5acb8ce5b6acb7d11bafe97cecc533f6e4fd751",
+                "reference": "d5acb8ce5b6acb7d11bafe97cecc533f6e4fd751",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "matthiasmullie/path-converter": "~1.1",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.0",
+                "matthiasmullie/scrapbook": "~1.0",
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "psr/cache-implementation": "Cache implementation to use with Minify::cache"
+            },
+            "bin": [
+                "bin/minifycss",
+                "bin/minifyjs"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MatthiasMullie\\Minify\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "email": "minify@mullie.eu",
+                    "homepage": "http://www.mullie.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CSS & JavaScript minifier, in PHP. Removes whitespace, strips comments, combines files (incl. @import statements and small assets in CSS files), and optimizes/shortens a few common programming patterns.",
+            "homepage": "http://www.minifier.org",
+            "keywords": [
+                "JS",
+                "css",
+                "javascript",
+                "minifier",
+                "minify"
+            ],
+            "time": "2018-11-26T23:10:39+00:00"
+        },
+        {
+            "name": "matthiasmullie/path-converter",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/path-converter.git",
+                "reference": "5e4b121c8b9f97c80835c1d878b0812ba1d607c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/5e4b121c8b9f97c80835c1d878b0812ba1d607c9",
+                "reference": "5e4b121c8b9f97c80835c1d878b0812ba1d607c9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MatthiasMullie\\PathConverter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "role": "Developer",
+                    "email": "pathconverter@mullie.eu",
+                    "homepage": "http://www.mullie.eu"
+                }
+            ],
+            "description": "Relative path converter",
+            "homepage": "http://github.com/matthiasmullie/path-converter",
+            "keywords": [
+                "converter",
+                "path",
+                "paths",
+                "relative"
+            ],
+            "time": "2018-10-25T15:19:41+00:00"
+        },
+        {
+            "name": "phpmailer/phpmailer",
+            "version": "v6.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "0c41a36d4508d470e376498c1c0c527aa36a2d59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/0c41a36d4508d470e376498c1c0c527aa36a2d59",
+                "reference": "0c41a36d4508d470e376498c1c0c527aa36a2d59",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-filter": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "1.2.*",
+                "friendsofphp/php-cs-fixer": "^2.2",
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phpunit/phpunit": "^4.8 || ^5.7",
+                "zendframework/zend-eventmanager": "3.0.*",
+                "zendframework/zend-i18n": "2.7.3",
+                "zendframework/zend-serializer": "2.7.*"
+            },
+            "suggest": {
+                "ext-mbstring": "Needed to send email in multibyte encoding charset",
+                "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
+                "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
+                "psr/log": "For optional PSR-3 debug logging",
+                "stevenmaguire/oauth2-microsoft": "Needed for Microsoft XOAUTH2 authentication",
+                "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPMailer\\PHPMailer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
+                },
+                {
+                    "name": "Marcus Bointon",
+                    "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Andy Prevost",
+                    "email": "codeworxtech@users.sourceforge.net"
+                },
+                {
+                    "name": "Brent R. Matzelle"
+                }
+            ],
+            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "time": "2019-02-01T15:04:28+00:00"
         }
-      ],
-      "description": "It is a easy PHP upload manager for images, files and media in your application",
-      "homepage": "http://www.upinside.com.br",
-      "keywords": [
-        "Coffeecode",
-        "Image upload",
-        "file upload",
-        "media upload",
-        "upinside",
-        "upload"
-      ],
-      "time": "2019-07-08T23:06:18+00:00"
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "league/plates": 15
     },
-    {
-      "name": "league/plates",
-      "version": "v4.0.0-alpha",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/thephpleague/plates.git",
-        "reference": "f53f4c1fa4bf307d0f3858a348172ff4faf7669a"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/thephpleague/plates/zipball/f53f4c1fa4bf307d0f3858a348172ff4faf7669a",
-        "reference": "f53f4c1fa4bf307d0f3858a348172ff4faf7669a",
-        "shasum": ""
-      },
-      "require": {
-        "php": "^7.0"
-      },
-      "require-dev": {
-        "eloquent/phony-peridot": "^2.0",
-        "peridot-php/leo": "^1.6",
-        "peridot-php/peridot": "^1.19",
-        "peridot-php/peridot-code-coverage-reporters": "^3.0",
-        "squizlabs/php_codesniffer": "~1.5"
-      },
-      "type": "library",
-      "extra": {
-        "branch-alias": {
-          "dev-master": "4.0-dev"
-        }
-      },
-      "autoload": {
-        "psr-4": {
-          "League\\Plates\\": "src"
-        },
-        "files": [
-          "src/Template/match.php",
-          "src/Extension/Data/data.php",
-          "src/Extension/Path/path.php",
-          "src/Extension/RenderContext/func.php",
-          "src/Extension/RenderContext/render-context.php",
-          "src/Extension/LayoutSections/layout-sections.php",
-          "src/Extension/Folders/folders.php",
-          "src/Util/util.php"
-        ]
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
-      "authors": [
-        {
-          "name": "Jonathan Reinink",
-          "email": "jonathan@reinink.ca",
-          "role": "Developer"
-        },
-        {
-          "name": "RJ Garcia",
-          "email": "rj@bighead.net",
-          "role": "Developer"
-        }
-      ],
-      "description": "Plates, the native PHP template system that's fast, easy to use and easy to extend.",
-      "homepage": "http://platesphp.com",
-      "keywords": [
-        "league",
-        "package",
-        "templates",
-        "templating",
-        "views"
-      ],
-      "time": "2018-01-31T07:20:23+00:00"
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": "^7.1",
+        "ext-pdo": "^7.1"
     },
-    {
-      "name": "matthiasmullie/minify",
-      "version": "1.3.61",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/matthiasmullie/minify.git",
-        "reference": "d5acb8ce5b6acb7d11bafe97cecc533f6e4fd751"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/d5acb8ce5b6acb7d11bafe97cecc533f6e4fd751",
-        "reference": "d5acb8ce5b6acb7d11bafe97cecc533f6e4fd751",
-        "shasum": ""
-      },
-      "require": {
-        "ext-pcre": "*",
-        "matthiasmullie/path-converter": "~1.1",
-        "php": ">=5.3.0"
-      },
-      "require-dev": {
-        "friendsofphp/php-cs-fixer": "~2.0",
-        "matthiasmullie/scrapbook": "~1.0",
-        "phpunit/phpunit": "~4.8"
-      },
-      "suggest": {
-        "psr/cache-implementation": "Cache implementation to use with Minify::cache"
-      },
-      "bin": [
-        "bin/minifycss",
-        "bin/minifyjs"
-      ],
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "MatthiasMullie\\Minify\\": "src/"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
-      "authors": [
-        {
-          "name": "Matthias Mullie",
-          "email": "minify@mullie.eu",
-          "homepage": "http://www.mullie.eu",
-          "role": "Developer"
-        }
-      ],
-      "description": "CSS & JavaScript minifier, in PHP. Removes whitespace, strips comments, combines files (incl. @import statements and small assets in CSS files), and optimizes/shortens a few common programming patterns.",
-      "homepage": "http://www.minifier.org",
-      "keywords": [
-        "JS",
-        "css",
-        "javascript",
-        "minifier",
-        "minify"
-      ],
-      "time": "2018-11-26T23:10:39+00:00"
-    },
-    {
-      "name": "matthiasmullie/path-converter",
-      "version": "1.1.2",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/matthiasmullie/path-converter.git",
-        "reference": "5e4b121c8b9f97c80835c1d878b0812ba1d607c9"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/5e4b121c8b9f97c80835c1d878b0812ba1d607c9",
-        "reference": "5e4b121c8b9f97c80835c1d878b0812ba1d607c9",
-        "shasum": ""
-      },
-      "require": {
-        "ext-pcre": "*",
-        "php": ">=5.3.0"
-      },
-      "require-dev": {
-        "phpunit/phpunit": "~4.8"
-      },
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "MatthiasMullie\\PathConverter\\": "src/"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
-      "authors": [
-        {
-          "name": "Matthias Mullie",
-          "role": "Developer",
-          "email": "pathconverter@mullie.eu",
-          "homepage": "http://www.mullie.eu"
-        }
-      ],
-      "description": "Relative path converter",
-      "homepage": "http://github.com/matthiasmullie/path-converter",
-      "keywords": [
-        "converter",
-        "path",
-        "paths",
-        "relative"
-      ],
-      "time": "2018-10-25T15:19:41+00:00"
-    },
-    {
-      "name": "phpmailer/phpmailer",
-      "version": "v6.0.7",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/PHPMailer/PHPMailer.git",
-        "reference": "0c41a36d4508d470e376498c1c0c527aa36a2d59"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/0c41a36d4508d470e376498c1c0c527aa36a2d59",
-        "reference": "0c41a36d4508d470e376498c1c0c527aa36a2d59",
-        "shasum": ""
-      },
-      "require": {
-        "ext-ctype": "*",
-        "ext-filter": "*",
-        "php": ">=5.5.0"
-      },
-      "require-dev": {
-        "doctrine/annotations": "1.2.*",
-        "friendsofphp/php-cs-fixer": "^2.2",
-        "phpdocumentor/phpdocumentor": "2.*",
-        "phpunit/phpunit": "^4.8 || ^5.7",
-        "zendframework/zend-eventmanager": "3.0.*",
-        "zendframework/zend-i18n": "2.7.3",
-        "zendframework/zend-serializer": "2.7.*"
-      },
-      "suggest": {
-        "ext-mbstring": "Needed to send email in multibyte encoding charset",
-        "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
-        "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
-        "psr/log": "For optional PSR-3 debug logging",
-        "stevenmaguire/oauth2-microsoft": "Needed for Microsoft XOAUTH2 authentication",
-        "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)"
-      },
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "PHPMailer\\PHPMailer\\": "src/"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "LGPL-2.1"
-      ],
-      "authors": [
-        {
-          "name": "Jim Jagielski",
-          "email": "jimjag@gmail.com"
-        },
-        {
-          "name": "Marcus Bointon",
-          "email": "phpmailer@synchromedia.co.uk"
-        },
-        {
-          "name": "Andy Prevost",
-          "email": "codeworxtech@users.sourceforge.net"
-        },
-        {
-          "name": "Brent R. Matzelle"
-        }
-      ],
-      "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-      "time": "2019-02-01T15:04:28+00:00"
-    }
-  ],
-  "packages-dev": [],
-  "aliases": [],
-  "minimum-stability": "stable",
-  "stability-flags": {
-    "league/plates": 15
-  },
-  "prefer-stable": false,
-  "prefer-lowest": false,
-  "platform": {
-    "php": "^7.1",
-    "ext-pdo": "^7.1"
-  },
-  "platform-dev": []
+    "platform-dev": []
 }
