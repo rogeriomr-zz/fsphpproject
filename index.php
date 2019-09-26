@@ -59,7 +59,8 @@ $route->get("/fatura/{invoice}", "App:invoice");
 $route->get("/perfil", "App:profile");
 $route->get("/sair", "App:logout");
 
-$route->post("/launch", "App:Launch");
+$route->post("/launch", "App:launch");
+$route->post("/support", "App:support");
 
 /*
  * ERROR ROUTES
