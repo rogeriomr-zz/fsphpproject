@@ -345,6 +345,35 @@ class App extends Controller
     }
 
     /**
+     * @param array $data
+     */
+    public function onpaid(array $data): void
+    {
+        $invoice = (new AppInvoice())
+        ->find("User_id = :user AND id = :id", "user={$this->user->id}&id={$data["invoice"]}")
+        ->fetch();
+
+        if (!$invoice) {
+            $this->message->error("Ooops! Ocorreu um erro ao atualizar o lançado :/")->flash();
+            $json["reload"] = true;
+            echo json_encode($json);
+            return;
+        }
+
+        $invoice->status = ($invoice->status == "paid" ? "unpaid" : "paid");
+        $invoice->save();
+
+        $y = date("Y");
+        $m = date("m");
+        if ($data["date"]) {
+            list($m, $y) = explode("/", $data["date"]);
+        }
+
+        $json["onpaid"] = (new AppInvoice())->balance($this->user, $y, $m, $invoice->type);
+        echo json_encode($json);
+    }
+
+    /**
      * APP INVOICE (Fatura)
      */
     public function invoice()
