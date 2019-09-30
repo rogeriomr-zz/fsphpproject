@@ -6,6 +6,8 @@
  * ####################
  */
 
+use Source\Core\Session;
+
 /**
  * @param string $email
  * @return bool
@@ -205,6 +207,14 @@ function redirect(string $url): void
 function user(): ?\Source\Models\User
 {
     return \Source\Models\Auth::user();
+}
+
+/**
+ * @return Session
+ */
+function session(): Session
+{
+    return new Session();
 }
 
 /**
