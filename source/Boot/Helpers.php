@@ -6,11 +6,6 @@
  * ####################
  */
 
-use Source\Core\Session;
-use Source\Models\Auth;
-use Source\Models\User;
-use Source\Support\Thumb;
-
 /**
  * @param string $email
  * @return bool
@@ -178,7 +173,6 @@ function url(string $path = null): string
 function url_back(): string
 {
     return ($_SERVER['HTTP_REFERER'] ?? url());
-
 }
 
 /**
@@ -206,11 +200,11 @@ function redirect(string $url): void
  */
 
 /**
- * @return null|\Source\Models\User
+ * @return \Source\Models\User|null
  */
-function user(): ?User
+function user(): ?\Source\Models\User
 {
-    return Auth::user();
+    return \Source\Models\Auth::user();
 }
 
 /**
@@ -224,6 +218,7 @@ function theme(string $path = null, string $theme = CONF_VIEW_THEME): string
         if ($path) {
             return CONF_URL_TEST . "/themes/{$theme}/" . ($path[0] == "/" ? mb_substr($path, 1) : $path);
         }
+
         return CONF_URL_TEST . "/themes/{$theme}";
     }
 
@@ -242,7 +237,7 @@ function theme(string $path = null, string $theme = CONF_VIEW_THEME): string
  */
 function image(string $image, int $width, int $height = null): string
 {
-    return url() . "/" . (new Thumb())->make($image, $width, $height);
+    return url() . "/" . (new \Source\Support\Thumb())->make($image, $width, $height);
 }
 
 /**
@@ -255,6 +250,7 @@ function image(string $image, int $width, int $height = null): string
  * @param string $date
  * @param string $format
  * @return string
+ * @throws Exception
  */
 function date_fmt(string $date = "now", string $format = "d/m/Y H\hi"): string
 {
@@ -264,6 +260,7 @@ function date_fmt(string $date = "now", string $format = "d/m/Y H\hi"): string
 /**
  * @param string $date
  * @return string
+ * @throws Exception
  */
 function date_fmt_br(string $date = "now"): string
 {
@@ -273,6 +270,7 @@ function date_fmt_br(string $date = "now"): string
 /**
  * @param string $date
  * @return string
+ * @throws Exception
  */
 function date_fmt_app(string $date = "now"): string
 {
@@ -347,13 +345,13 @@ function csrf_verify($request): bool
 }
 
 /**
- * @return string|null
+ * @return null|string
  */
 function flash(): ?string
 {
-    $session = new Session();
+    $session = new \Source\Core\Session();
     if ($flash = $session->flash()) {
-        echo $flash;
+        return $flash;
     }
     return null;
 }
@@ -366,7 +364,7 @@ function flash(): ?string
  */
 function request_limit(string $key, int $limit = 5, int $seconds = 60): bool
 {
-    $session = new Session();
+    $session = new \Source\Core\Session();
     if ($session->has($key) && $session->$key->time >= time() && $session->$key->requests < $limit) {
         $session->set($key, [
             "time" => time() + $seconds,
@@ -381,7 +379,7 @@ function request_limit(string $key, int $limit = 5, int $seconds = 60): bool
 
     $session->set($key, [
         "time" => time() + $seconds,
-        "request" => 1
+        "requests" => 1
     ]);
 
     return false;
@@ -402,12 +400,3 @@ function request_repeat(string $field, string $value): bool
     $session->set($field, $value);
     return false;
 }
-
-
-
-
-
-
-
-
-

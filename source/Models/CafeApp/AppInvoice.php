@@ -17,8 +17,7 @@ class AppInvoice extends Model
     public function __construct()
     {
         parent::__construct(
-            "app_invoices",
-            ["id"],
+            "app_invoices", ["id"],
             ["user_id", "wallet_id", "category_id", "description", "type", "value", "due_at", "repeat_when"]
         );
     }
@@ -29,10 +28,8 @@ class AppInvoice extends Model
      */
     public function fixed(User $user, int $afterMonths = 1): void
     {
-        $fixed = $this->find(
-            "user_id = :user AND status = 'paid' AND type IN('fixed_income', 'fixed_expense')",
-            "user={$user->id}"
-        )->fetch(true);
+        $fixed = $this->find("user_id = :user AND status = 'paid' AND type IN('fixed_income', 'fixed_expense')",
+            "user={$user->id}")->fetch(true);
 
         if (!$fixed) {
             return;
@@ -53,11 +50,9 @@ class AppInvoice extends Model
 
             $period = new \DatePeriod($start, $interval, $end);
             foreach ($period as $item) {
-                $getFixed = $this->find(
-                    "user_id = :user AND invoice_of = :of AND year(due_at) = :y AND month(due_at) = :m",
+                $getFixed = $this->find("user_id = :user AND invoice_of = :of AND year(due_at) = :y AND month(due_at) = :m",
                     "user={$user->id}&of={$fixedItem->id}&y={$item->format("Y")}&m={$item->format("m")}",
-                    "id"
-                )->fetch();
+                    "id")->fetch();
 
                 if (!$getFixed) {
                     $newItem = $fixedItem;

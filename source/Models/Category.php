@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Source\Models;
-
 
 use Source\Core\Model;
 
@@ -23,9 +21,9 @@ class Category extends Model
     /**
      * @param string $uri
      * @param string $columns
-     * @return Category|null
+     * @return null|Category
      */
-    public function findByUri(string $uri, $columns = "*"): ?Category
+    public function findByUri(string $uri, string $columns = "*"): ?Category
     {
         $find = $this->find("uri = :uri", "uri={$uri}", $columns);
         return $find->fetch();

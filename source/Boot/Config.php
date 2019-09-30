@@ -33,14 +33,14 @@ define("CONF_SITE_ADDR_ZIPCODE", "88048-301");
 /**
  * SOCIAL
  */
-define("CONF_SOCIAL_TWITTER_CREATOR", "@rogeriomr");
-define("CONF_SOCIAL_TWITTER_PUBLISHER", "@rogeriomr");
+define("CONF_SOCIAL_TWITTER_CREATOR", "@");
+define("CONF_SOCIAL_TWITTER_PUBLISHER", "@");
 define("CONF_SOCIAL_FACEBOOK_APP", "626590460695980");
 define("CONF_SOCIAL_FACEBOOK_PAGE", "upinside");
-define("CONF_SOCIAL_FACEBOOK_AUTHOR", "RogerioMateusRicardo");
+define("CONF_SOCIAL_FACEBOOK_AUTHOR", "");
 define("CONF_SOCIAL_GOOGLE_PAGE", "107305124528362639842");
 define("CONF_SOCIAL_GOOGLE_AUTHOR", "103958419096641225872");
-define("CONF_SOCIAL_INSTAGRAM_PAGE", "rogeriomr");
+define("CONF_SOCIAL_INSTAGRAM_PAGE", "");
 define("CONF_SOCIAL_YOUTUBE_PAGE", "upinside");
 
 /**
@@ -87,8 +87,8 @@ define("CONF_MAIL_HOST", "smtp.sendgrid.net");
 define("CONF_MAIL_PORT", "587");
 define("CONF_MAIL_USER", "apikey");
 define("CONF_MAIL_PASS", "SG.I6CS2w1-SGSofmWUdSWwag.8cLGB1O9Owib-1DDv1RC5sJxU9yTt-Sd-IGCJaaBFiI");
-define("CONF_MAIL_SENDER", ["name" => "Rogerio Mateus Ricardo", "address" => "rogerio22mateus@outlook.com"]);
-define("CONF_MAIL_SUPPORT", "rogeriomr2203@gmail.com");
+define("CONF_MAIL_SENDER", ["name" => "Rgerio Mateus Ricardo", "address" => "rogerio22ricardo.com"]);
+define("CONF_MAIL_SUPPORT", "rogerio22ricardo@gmail.com");
 define("CONF_MAIL_OPTION_LANG", "br");
 define("CONF_MAIL_OPTION_HTML", true);
 define("CONF_MAIL_OPTION_AUTH", true);

@@ -105,6 +105,7 @@
                 thousandsSep: '.'
             }
         });
+
         Highcharts.chart('control', {
             chart: {
                 type: 'areaspline',

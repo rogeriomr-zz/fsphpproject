@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Source\Models;
-
 
 use Source\Core\Model;
 use Source\Core\Session;
@@ -114,7 +112,6 @@ class Auth extends Model
 
         //LOGIN
         (new Session())->set("authUser", $user->id);
-        $this->message->success("Login efetuado com sucesso")->flash();
         return true;
     }
 
@@ -127,7 +124,7 @@ class Auth extends Model
         $user = (new User())->findByEmail($email);
 
         if (!$user) {
-            $this->message->warning("O e-mail informado não está cadastrado");
+            $this->message->warning("O e-mail informado não está cadastrado.");
             return false;
         }
 
@@ -189,15 +186,3 @@ class Auth extends Model
         return true;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

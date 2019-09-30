@@ -4,12 +4,16 @@
         <header class="post_page_header">
             <div class="post_page_hero">
                 <h1><?= $post->title; ?></h1>
-                <img class="post_page_cover" alt="" title="" src="<?= image($post->cover, 1280); ?>"/>
+                <img class="post_page_cover" alt="<?= $post->title; ?>" title="<?= $post->title; ?>"
+                     src="<?= image($post->cover, 1280); ?>"/>
                 <div class="post_page_meta">
                     <div class="author">
-                        <div><img src="<?= image($post->author()->photo, 200); ?>"/></div>
+                        <div><img alt="<?= "{$post->author()->first_name} {$post->author()->last_name}"; ?>"
+                                  title="<?= "{$post->author()->first_name} {$post->author()->last_name}"; ?>"
+                                  src="<?= image($post->author()->photo, 200); ?>"/></div>
                         <div class="name">
-                            Por: <?= "{$post->author()->first_name} {$post->author()->last_name}"; ?></div>
+                            Por: <?= "{$post->author()->first_name} {$post->author()->last_name}"; ?>
+                        </div>
                     </div>
                     <div class="date">Dia <?= date_fmt($post->post_at); ?></div>
                 </div>
@@ -36,7 +40,7 @@
 
                     <!--twitter-->
                     <a href="https://twitter.com/share?ref_src=site" class="twitter-share-button" data-size="large"
-                       data-text="<?= $post->title; ?>" data-url="<?= url("/post/$post->uri"); ?>"
+                       data-text="<?= $post->title; ?>" data-url="<?= url($post->uri); ?>"
                        data-via="<?= str_replace("@", "", CONF_SOCIAL_TWITTER_CREATOR); ?>"
                        data-show-count="true">Tweet</a>
                 </div>

@@ -2,15 +2,8 @@
 
 namespace Source\Core;
 
-use Source\Models\User;
 use Source\Support\Message;
 
-/**
- * FSPHP | Class Model Layer Supertype Pattern
- *
- * @author Robson V. Leite <cursos@upinside.com.br>
- * @package Source\Models
- */
 abstract class Model
 {
     /** @var object|null */
@@ -116,11 +109,10 @@ abstract class Model
         return $this->message;
     }
 
-
     /**
-     * @param string|null $terms
-     * @param string|null $params
-     * @param string $colums
+     * @param null|string $terms
+     * @param null|string $params
+     * @param string $columns
      * @return Model|mixed
      */
     public function find(?string $terms = null, ?string $params = null, string $columns = "*")
@@ -212,7 +204,6 @@ abstract class Model
         return $stmt->rowCount();
     }
 
-
     /**
      * @param array $data
      * @return int|null
@@ -264,11 +255,11 @@ abstract class Model
     public function save(): bool
     {
         if (!$this->required()) {
-            $this->message()->warning("Preencha todos os campos para continuar");
+            $this->message->warning("Preencha todos os campos para continuar");
             return false;
         }
 
-        /** Update Access */
+        /** Update */
         if (!empty($this->id)) {
             $id = $this->id;
             $this->update($this->safe(), "id = :id", "id={$id}");
@@ -278,8 +269,7 @@ abstract class Model
             }
         }
 
-
-        /** Create Access */
+        /** Create */
         if (empty($this->id)) {
             $id = $this->create($this->safe());
             if ($this->fail()) {
@@ -288,7 +278,7 @@ abstract class Model
             }
         }
 
-        $this->data = $this->findById($id)->data();;
+        $this->data = $this->findById($id)->data();
         return true;
     }
 
@@ -306,6 +296,7 @@ abstract class Model
                 $stmt->execute($params);
                 return true;
             }
+
             $stmt->execute();
             return true;
         } catch (\PDOException $exception) {

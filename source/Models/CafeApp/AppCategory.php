@@ -11,4 +11,3 @@ class AppCategory extends Model
         parent::__construct("app_categories", ["id"], ["name", "type"]);
     }
 }
-

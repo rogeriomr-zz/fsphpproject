@@ -65,7 +65,7 @@ class Upload
             return null;
         }
 
-        return str_replace(CONF_UPLOAD_DIR . "/", $upload->upload($file, $name));
+        return str_replace(CONF_UPLOAD_DIR . "/", "", $upload->upload($file, $name));
     }
 
     /**
@@ -82,7 +82,7 @@ class Upload
             return null;
         }
 
-        return str_replace(CONF_UPLOAD_DIR . "/", $upload->upload($media, $name));
+        return str_replace(CONF_UPLOAD_DIR . "/", "", $upload->upload($media, $name));
     }
 
     /**

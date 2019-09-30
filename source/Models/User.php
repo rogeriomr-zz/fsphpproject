@@ -4,12 +4,6 @@ namespace Source\Models;
 
 use Source\Core\Model;
 
-/**
- * FSPHP | Class User Active Record Pattern
- *
- * @author Robson V. Leite <cursos@upinside.com.br>
- * @package Source\Models
- */
 class User extends Model
 {
     /**
@@ -17,11 +11,7 @@ class User extends Model
      */
     public function __construct()
     {
-        parent::__construct(
-            "users",
-            ["id"],
-            ["first_name", "last_name", "email", "password"]
-        );
+        parent::__construct("users", ["id"], ["first_name", "last_name", "email", "password"]);
     }
 
     /**
@@ -58,6 +48,9 @@ class User extends Model
         return $find->fetch();
     }
 
+    /**
+     * @return string|null
+     */
     public function photo(): ?string
     {
         if ($this->photo && file_exists(__DIR__ . "/../../" . CONF_UPLOAD_DIR . "/{$this->photo}")) {

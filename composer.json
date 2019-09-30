@@ -1,12 +1,12 @@
 {
-  "name": "upinside/fsphpproject",
+  "name": "upinside/fsphp",
   "description": "Formação Full Stack PHP Developer",
   "minimum-stability": "stable",
   "authors": [
     {
       "name": "Rogerio Mateus Ricardo",
       "email": "rogerio22ricardo@gmail.com",
-      "homepage": "https://www.upinside.com.br",
+      "homepage": "https://github.com/rogeriomr?tab=repositories",
       "role": "Developer"
     }
   ],

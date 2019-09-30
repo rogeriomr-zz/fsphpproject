@@ -1,19 +1,15 @@
 <?php
 
-
 namespace Source\App;
 
-use Source\Core\Connect;
 use Source\Core\Controller;
-use Source\Models\Report\Access;
 use Source\Models\Auth;
 use Source\Models\Category;
-use Source\Models\Faq\Channel;
 use Source\Models\Faq\Question;
 use Source\Models\Post;
+use Source\Models\Report\Access;
 use Source\Models\Report\Online;
 use Source\Models\User;
-use Source\Support\Email;
 use Source\Support\Pager;
 
 /**
@@ -34,7 +30,7 @@ class Web extends Controller
     }
 
     /**
-     *  SITE HOME
+     * SITE HOME
      */
     public function home(): void
     {
@@ -42,7 +38,7 @@ class Web extends Controller
             CONF_SITE_NAME . " - " . CONF_SITE_TITLE,
             CONF_SITE_DESC,
             url(),
-            theme("/assets/images/share.jps")
+            theme("/assets/images/share.jpg")
         );
 
         echo $this->view->render("home", [
@@ -65,7 +61,7 @@ class Web extends Controller
             "Descubra o " . CONF_SITE_NAME . " - " . CONF_SITE_DESC,
             CONF_SITE_DESC,
             url("/sobre"),
-            theme("/assets/images/share.jps")
+            theme("/assets/images/share.jpg")
         );
 
         echo $this->view->render("about", [
@@ -86,9 +82,9 @@ class Web extends Controller
     {
         $head = $this->seo->render(
             "Blog - " . CONF_SITE_NAME,
-            "Confira em nosso blog dicas e sacadas de como controlar melhor suas contas. Vamos tomar um café?",
+            "Confira em nosso blog dicas e sacadas de como controlar melhorar suas contas. Vamos tomar um café?",
             url("/blog"),
-            theme("/assets/images/share.jps")
+            theme("/assets/images/share.jpg")
         );
 
         $blog = (new Post())->find();
@@ -204,13 +200,13 @@ class Web extends Controller
         $post->save();
 
         $head = $this->seo->render(
-            "{$post->title}" . CONF_SITE_NAME,
+            "{$post->title} - " . CONF_SITE_NAME,
             $post->subtitle,
             url("/blog/{$post->uri}"),
             image($post->cover, 1200, 628)
         );
 
-        echo $this->view->render("blog-POST", [
+        echo $this->view->render("blog-post", [
             "head" => $head,
             "post" => $post,
             "related" => (new Post())
@@ -239,7 +235,7 @@ class Web extends Controller
             }
 
             if (request_limit("weblogin", 3, 60 * 5)) {
-                $json['message'] = $this->message->error("Você já efetuou 3 tentativas, esse é o limite. Por favor, aguarde 5 minutos pata tentar novamente")->render();
+                $json['message'] = $this->message->error("Você já efetuou 3 tentativas, esse é o limite. Por favor, aguarde 5 minutos para tentar novamente!")->render();
                 echo json_encode($json);
                 return;
             }
@@ -255,6 +251,7 @@ class Web extends Controller
             $login = $auth->login($data['email'], $data['password'], $save);
 
             if ($login) {
+                $this->message->success("Seja bem-vindo(a) de volta " . Auth::user()->first_name . "!")->flash();
                 $json['redirect'] = url("/app");
             } else {
                 $json['message'] = $auth->message()->before("Ooops! ")->render();
@@ -301,7 +298,7 @@ class Web extends Controller
             }
 
             if (request_repeat("webforget", $data["email"])) {
-                $json['message'] = $this->message->error("Ooops! Você ja tentou este e-mail antes")->render();
+                $json['message'] = $this->message->error("Ooops! Você já tentou este e-mail antes")->render();
                 echo json_encode($json);
                 return;
             }
@@ -405,10 +402,10 @@ class Web extends Controller
             $auth = new Auth();
             $user = new User();
             $user->bootstrap(
-                $data['first_name'],
-                $data['last_name'],
-                $data['email'],
-                $data['password']
+                $data["first_name"],
+                $data["last_name"],
+                $data["email"],
+                $data["password"]
             );
 
             if ($auth->register($user)) {
@@ -425,7 +422,7 @@ class Web extends Controller
             "Criar Conta - " . CONF_SITE_NAME,
             CONF_SITE_DESC,
             url("/cadastrar"),
-            theme("/assets/images/share.jps")
+            theme("/assets/images/share.jpg")
         );
 
         echo $this->view->render("auth-register", [
@@ -439,10 +436,10 @@ class Web extends Controller
     public function confirm(): void
     {
         $head = $this->seo->render(
-            "Confirme Seu Cdastro - " . CONF_SITE_NAME,
+            "Confirme Seu Cadastro - " . CONF_SITE_NAME,
             CONF_SITE_DESC,
             url("/confirma"),
-            theme("/assets/images/share.jps")
+            theme("/assets/images/share.jpg")
         );
 
         echo $this->view->render("optin", [
@@ -464,7 +461,7 @@ class Web extends Controller
         $email = base64_decode($data["email"]);
         $user = (new User())->findByEmail($email);
 
-        if ($user && $user != "confirmed") {
+        if ($user && $user->status != "confirmed") {
             $user->status = "confirmed";
             $user->save();
         }
@@ -473,7 +470,7 @@ class Web extends Controller
             "Bem-vindo(a) ao " . CONF_SITE_NAME,
             CONF_SITE_DESC,
             url("/obrigado"),
-            theme("/assets/images/share.jps")
+            theme("/assets/images/share.jpg")
         );
 
         echo $this->view->render("optin", [
@@ -484,8 +481,11 @@ class Web extends Controller
                 "image" => theme("/assets/images/optin-success.jpg"),
                 "link" => url("/entrar"),
                 "linkTitle" => "Fazer Login"
+            ],
+            "track" => (object)[
+                "fb" => "Lead",
+                "aw" => "AW-953362805/yAFTCKuakIwBEPXSzMYD"
             ]
-
         ]);
     }
 
@@ -498,11 +498,11 @@ class Web extends Controller
             CONF_SITE_NAME . " - Termos de uso",
             CONF_SITE_DESC,
             url("/termos"),
-            theme("/assets/images/share.jps")
+            theme("/assets/images/share.jpg")
         );
 
         echo $this->view->render("terms", [
-            "head" => $head,
+            "head" => $head
         ]);
     }
 

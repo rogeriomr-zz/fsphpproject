@@ -26,7 +26,7 @@ class Online extends Model
 
     /**
      * @param bool $count
-     * @return null|array|int
+     * @return array|int|null
      */
     public function findByActive(bool $count = false)
     {
@@ -39,6 +39,7 @@ class Online extends Model
     }
 
     /**
+     * @param bool $clear
      * @return Online
      */
     public function report(bool $clear = true): Online
@@ -74,7 +75,10 @@ class Online extends Model
         return $this;
     }
 
-    public function clear(): void
+    /**
+     * CLEAR ONLINE
+     */
+    private function clear()
     {
         $this->delete("updated_at <= NOW() - INTERVAL {$this->sessionTime} MINUTE", null);
     }

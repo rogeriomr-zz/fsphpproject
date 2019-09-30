@@ -37,10 +37,18 @@ class Message
      */
     public function getText(): ?string
     {
-        return $this->before.$this->text.$this->after;;
+        return $this->before . $this->text . $this->after;
     }
 
-    /** 
+    /**
+     * @return string
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
      * @param string $text
      * @return Message
      */
@@ -58,14 +66,6 @@ class Message
     {
         $this->after = $text;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): ?string
-    {
-        return $this->type;
     }
 
     /**

@@ -19,7 +19,6 @@ if (strpos(url(), "localhost")) {
     //Minify CSS
     $minCSS->minify(__DIR__ . "/../../../themes/" . CONF_VIEW_APP . "/assets/style.css");
 
-
     /**
      * JS
      */
@@ -29,8 +28,9 @@ if (strpos(url(), "localhost")) {
     $minJS->add(__DIR__ . "/../../../shared/scripts/jquery-ui.js");
     $minJS->add(__DIR__ . "/../../../shared/scripts/jquery.mask.js");
     $minJS->add(__DIR__ . "/../../../shared/scripts/highcharts.js");
+    $minJS->add(__DIR__ . "/../../../shared/scripts/tracker.js");
 
-    //theme JS
+    //theme CSS
     $jsDir = scandir(__DIR__ . "/../../../themes/" . CONF_VIEW_APP . "/assets/js");
     foreach ($jsDir as $js) {
         $jsFile = __DIR__ . "/../../../themes/" . CONF_VIEW_APP . "/assets/js/{$js}";

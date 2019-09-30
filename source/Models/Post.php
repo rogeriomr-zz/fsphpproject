@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Source\Models;
 
 use Source\Core\Model;
@@ -15,18 +14,18 @@ class Post extends Model
     private $all;
 
     /**
-     * Post constructor
+     * Post constructor.
      * @param bool $all = ignore status and post_at
      */
     public function __construct(bool $all = false)
     {
         $this->all = $all;
-        parent::__construct("posts", ["id"], ["title", "id", "subtitle", "content"]);
+        parent::__construct("posts", ["id"], ["title", "uri", "subtitle", "content"]);
     }
 
     /**
-     * @param string|null $terms
-     * @param string|null $params
+     * @param null|string $terms
+     * @param null|string $params
      * @param string $columns
      * @return mixed|Model
      */
@@ -42,7 +41,7 @@ class Post extends Model
     /**
      * @param string $uri
      * @param string $columns
-     * @return Post|null
+     * @return null|Post
      */
     public function findByUri(string $uri, string $columns = "*"): ?Post
     {
@@ -51,7 +50,7 @@ class Post extends Model
     }
 
     /**
-     * @return User|null
+     * @return null|User
      */
     public function author(): ?User
     {
@@ -62,7 +61,7 @@ class Post extends Model
     }
 
     /**
-     * @return Category|null
+     * @return null|Category
      */
     public function category(): ?Category
     {

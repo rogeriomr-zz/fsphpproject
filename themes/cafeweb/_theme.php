@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+        <meta name="mit" content="2019-09-30T09:30:09-03:00+169794">
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <?= $head; ?>
@@ -33,14 +34,13 @@
                 <a class="link transition radius" title="Sobre" href="<?= url("/sobre"); ?>">Sobre</a>
                 <a class="link transition radius" title="Blog" href="<?= url("/blog"); ?>">Blog</a>
 
-                <?php if (Source\Models\Auth::user()): ?>
+                <?php if (\Source\Models\Auth::user()): ?>
                     <a class="link login transition radius icon-coffee" title="Controlar"
                        href="<?= url("/app"); ?>">Controlar</a>
                 <?php else: ?>
                     <a class="link login transition radius icon-sign-in" title="Entrar"
                        href="<?= url("/entrar"); ?>">Entrar</a>
                 <?php endif; ?>
-
             </div>
         </nav>
     </div>
@@ -105,6 +105,7 @@
     </div>
 </footer>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-53658515-18"></script>
 <script src="<?= theme("/assets/scripts.js"); ?>"></script>
 <?= $v->section("scripts"); ?>
 

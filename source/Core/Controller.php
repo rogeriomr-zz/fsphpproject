@@ -5,16 +5,11 @@ namespace Source\Core;
 use Source\Support\Message;
 use Source\Support\Seo;
 
-/**
- * FSPHP | Class Controller
- *
- * @author Robson V. Leite <cursos@upinside.com.br>
- * @package Source\Core
- */
 class Controller
 {
     /** @var View */
     protected $view;
+
     /** @var Seo */
     protected $seo;
 

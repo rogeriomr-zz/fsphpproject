@@ -6,13 +6,13 @@ use Source\Core\Model;
 use Source\Core\Session;
 
 /**
- * Class Online
+ * Class Access
  * @package Source\Models\Report
  */
 class Access extends Model
 {
     /**
-     * Access constructor
+     * Access constructor.
      */
     public function __construct()
     {
@@ -24,7 +24,7 @@ class Access extends Model
      */
     public function report(): Access
     {
-        $find = $this->find("date(created_at) = DATE(now())")->fetch();
+        $find = $this->find("DATE(created_at) = DATE(now())")->fetch();
         $session = new Session();
 
         if (!$find) {

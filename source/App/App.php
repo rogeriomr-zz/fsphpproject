@@ -3,6 +3,7 @@
 namespace Source\App;
 
 use Source\Core\Controller;
+use Source\Core\Session;
 use Source\Core\View;
 use Source\Models\Auth;
 use Source\Models\CafeApp\AppCategory;
@@ -13,7 +14,6 @@ use Source\Models\Report\Access;
 use Source\Models\Report\Online;
 use Source\Models\User;
 use Source\Support\Email;
-use Source\Support\Message;
 use Source\Support\Thumb;
 use Source\Support\Upload;
 
@@ -41,12 +41,23 @@ class App extends Controller
         (new Access())->report();
         (new Online())->report();
 
+        (new AppWallet())->start($this->user);
         (new AppInvoice())->fixed($this->user, 3);
+
+        //UNCONFIRMED EMAIL
+        if ($this->user->status != "confirmed") {
+            $session = new Session();
+            if (!$session->has("appconfirmed")) {
+                $this->message->info("IMPORTANTE: Acesse seu e-mail para confirmar seu cadastro e ativar todos os recursos.")->flash();
+                $session->set("appconfirmed", true);
+                (new Auth())->register($this->user);
+            }
+        }
     }
 
     /**
-       * APP HOME
-       */
+     * APP HOME
+     */
     public function home(): void
     {
         $head = $this->seo->render(
@@ -69,8 +80,7 @@ class App extends Controller
         $chartData->income = "0,0,0,0,0";
 
         $chart = (new AppInvoice())
-            ->find(
-                "user_id = :user AND status = :status AND due_at >= DATE(now() - INTERVAL 4 MONTH) GROUP BY year(due_at) ASC, month(due_at) ASC",
+            ->find("user_id = :user AND status = :status AND due_at >= DATE(now() - INTERVAL 4 MONTH) GROUP BY year(due_at) ASC, month(due_at) ASC",
                 "user={$this->user->id}&status=paid",
                 "
                     year(due_at) AS due_year,
@@ -100,31 +110,25 @@ class App extends Controller
 
         //INCOME && EXPENSE
         $income = (new AppInvoice())
-            ->find(
-                "user_id = :user AND type = 'income' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH)",
-                "user={$this->user->id}"
-            )
+            ->find("user_id = :user AND type = 'income' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH)",
+                "user={$this->user->id}")
             ->order("due_at")
             ->fetch(true);
 
         $expense = (new AppInvoice())
-            ->find(
-                "user_id = :user AND type = 'expense' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH)",
-                "user={$this->user->id}"
-            )
+            ->find("user_id = :user AND type = 'expense' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH)",
+                "user={$this->user->id}")
             ->order("due_at")
             ->fetch(true);
         //END INCOME && EXPENSE
 
         //WALLET
-        $wallet = (new AppInvoice())->find(
-            "user_id = :user AND status = :status",
+        $wallet = (new AppInvoice())->find("user_id = :user AND status = :status",
             "user={$this->user->id}&status=paid",
             "
                 (SELECT SUM(value) FROM app_invoices WHERE user_id = :user AND status = :status AND type = 'income') AS income,
                 (SELECT SUM(value) FROM app_invoices WHERE user_id = :user AND status = :status AND type = 'expense') AS expense
-            "
-        )->fetch();
+            ")->fetch();
 
         if ($wallet) {
             $wallet->wallet = $wallet->income - $wallet->expense;
@@ -146,9 +150,9 @@ class App extends Controller
     }
 
     /**
-    * @param array $data
-    * @throws \Exception
-    */
+     * @param array $data
+     * @throws \Exception
+     */
     public function filter(array $data): void
     {
         $status = (!empty($data["status"]) ? $data["status"] : "all");
@@ -237,6 +241,25 @@ class App extends Controller
         ]);
     }
 
+    /**
+     *
+     */
+    public function fixed(): void
+    {
+        $head = $this->seo->render(
+            "Minhas contas fixas - " . CONF_SITE_NAME,
+            CONF_SITE_DESC,
+            url(),
+            theme("/assets/images/share.jpg"),
+            false
+        );
+
+        echo $this->view->render("recurrences", [
+            "head" => $head,
+            "invoices" => (new AppInvoice())->find("user_id = :user AND type IN('fixed_income', 'fixed_expense')",
+                "user={$this->user->id}")->fetch(true)
+        ]);
+    }
 
     /**
      * @param array $data
@@ -353,11 +376,11 @@ class App extends Controller
     public function onpaid(array $data): void
     {
         $invoice = (new AppInvoice())
-        ->find("User_id = :user AND id = :id", "user={$this->user->id}&id={$data["invoice"]}")
-        ->fetch();
+            ->find("user_id = :user AND id = :id", "user={$this->user->id}&id={$data["invoice"]}")
+            ->fetch();
 
         if (!$invoice) {
-            $this->message->error("Ooops! Ocorreu um erro ao atualizar o lançado :/")->flash();
+            $this->message->error("Ooops! Ocorreu um erro ao atualizar o lançamento :/")->flash();
             $json["reload"] = true;
             echo json_encode($json);
             return;
@@ -379,13 +402,11 @@ class App extends Controller
     /**
      * @param array $data
      */
-    public function invoice(array $data)
+    public function invoice(array $data): void
     {
         if (!empty($data["update"])) {
-            $invoice = (new AppInvoice())->find(
-                "user_id = :user AND id = :id",
-                "user={$this->user->id}&id={$data["invoice"]}"
-            )->fetch();
+            $invoice = (new AppInvoice())->find("user_id = :user AND id = :id",
+                "user={$this->user->id}&id={$data["invoice"]}")->fetch();
 
             if (!$invoice) {
                 $json["message"] = $this->message->error("Ooops! Não foi possível carregar a fatura {$this->user->first_name}. Você pode tentar novamente.")->render();
@@ -394,7 +415,7 @@ class App extends Controller
             }
 
             if ($data["due_day"] < 1 || $data["due_day"] > $dayOfMonth = date("t", strtotime($invoice->due_at))) {
-                $json["message"] = $this->message->warning("O vencimento deve ser entre 1 e dia {$dayOfMonth} para este mês.")->render();
+                $json["message"] = $this->message->warning("O vencimento deve ser entre dia 1 e dia {$dayOfMonth} para este mês.")->render();
                 echo json_encode($json);
                 return;
             }
@@ -414,10 +435,8 @@ class App extends Controller
                 return;
             }
 
-            $invoiceOf = (new AppInvoice())->find(
-                "user_id = :user AND invoice_of = :of",
-                "user={$this->user->id}&of={$invoice->id}"
-            )->fetch(true);
+            $invoiceOf = (new AppInvoice())->find("user_id = :user AND invoice_of = :of",
+                "user={$this->user->id}&of={$invoice->id}")->fetch(true);
 
             if (!empty($invoiceOf) && in_array($invoice->type, ["fixed_income", "fixed_expense"])) {
                 foreach ($invoiceOf as $invoiceItem) {
@@ -431,14 +450,15 @@ class App extends Controller
 
                         if ($invoiceItem->status == "unpaid") {
                             $invoiceItem->value = str_replace([".", ","], ["", "."], $data["value"]);
-                            $invoiceItem-> due_at = date("Y-m-d", strtotime($due_day));
+                            $invoiceItem->due_at = date("Y-m-d", strtotime($due_day));
                         }
+
                         $invoiceItem->save();
                     }
                 }
             }
 
-            $json["message"] = $this->message->success("Pronto {$this->user->first_name}, a atualização foi fetuada com sucesso!")->render();
+            $json["message"] = $this->message->success("Pronto {$this->user->first_name}, a atualização foi efetuada com sucesso!")->render();
             echo json_encode($json);
             return;
         }
@@ -451,13 +471,11 @@ class App extends Controller
             false
         );
 
-        $invoice = (new AppInvoice())->find(
-            "user_id = :user AND id = :invoice",
-            "user={$this->user->id}&invoice={$data["invoice"]}"
-        )->fetch();
+        $invoice = (new AppInvoice())->find("user_id = :user AND id = :invoice",
+            "user={$this->user->id}&invoice={$data["invoice"]}")->fetch();
 
         if (!$invoice) {
-            $this->message->error("Ooops Você tentou acessar uma fatura que não existe")->flash();
+            $this->message->error("Ooops! Você tentou acessar uma fatura que não existe")->flash();
             redirect("/app");
         }
 
@@ -475,12 +493,13 @@ class App extends Controller
         ]);
     }
 
+    /**
+     * @param array $data
+     */
     public function remove(array $data): void
     {
-        $invoice = (new AppInvoice())->find(
-            "user_id = :user AND id = :invoice",
-            "user={$this->user->id}&invoice={$data["invoice"]}"
-        )->fetch();
+        $invoice = (new AppInvoice())->find("user_id = :user AND id = :invoice",
+            "user={$this->user->id}&invoice={$data["invoice"]}")->fetch();
 
         if ($invoice) {
             $invoice->destroy();
@@ -492,7 +511,7 @@ class App extends Controller
     }
 
     /**
-     * @param array|null $data
+     * @param array|null $array
      */
     public function profile(?array $data): void
     {
@@ -514,22 +533,21 @@ class App extends Controller
                     $upload->remove("storage/{$this->user->photo}");
                 }
 
-                if (!$user->photo = $upload->image($file, "{$user->first_name} {$user->last_name} ".time(), 360)) {
+                if (!$user->photo = $upload->image($file, "{$user->first_name} {$user->last_name} " . time(), 360)) {
                     $json["message"] = $upload->message()->before("Ooops {$this->user->first_name}! ")->after(".")->render();
                     echo json_encode($json);
                     return;
                 }
+            }
 
-                if (!empty($data["password"])) {
-                    if (empty($data["password_re"]) || $data["password"] != $data["password_re"]) {
-                        $json["message"] = $this->message->warning("Para alterar sua senha, informa e repita a nova senha!")->render();
-                        echo json_encode($json);
-                        return;
-                    }
-    
-                    $user->password = $data["password"];
+            if (!empty($data["password"])) {
+                if (empty($data["password_re"]) || $data["password"] != $data["password_re"]) {
+                    $json["message"] = $this->message->warning("Para alterar sua senha, informa e repita a nova senha!")->render();
+                    echo json_encode($json);
+                    return;
                 }
-    
+
+                $user->password = $data["password"];
             }
 
             if (!$user->save()) {
@@ -554,7 +572,8 @@ class App extends Controller
         echo $this->view->render("profile", [
             "head" => $head,
             "user" => $this->user,
-            "photo" => ($this->user->photo() ? image($this->user->photo, 360, 360) : theme("/assets/images/avatar.jpg", CONF_VIEW_APP))
+            "photo" => ($this->user->photo() ? image($this->user->photo, 360, 360) :
+                theme("/assets/images/avatar.jpg", CONF_VIEW_APP))
         ]);
     }
 
@@ -563,7 +582,7 @@ class App extends Controller
      */
     public function logout()
     {
-        (new Message())->info("Você saiu com sucesso " . Auth::user()->first_name . ". Volte logo :)")->flash();
+        $this->message->info("Você saiu com sucesso " . Auth::user()->first_name . ". Volte logo :)")->flash();
 
         Auth::logout();
         redirect("/entrar");

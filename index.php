@@ -7,16 +7,17 @@ require __DIR__ . "/vendor/autoload.php";
  * BOOTSTRAP
  */
 
-use Source\Core\Session;
 use CoffeeCode\Router\Router;
+use Source\Core\Session;
 
 $session = new Session();
 $route = new Router(url(), ":");
+$route->namespace("Source\App");
 
-/*
+/**
  * WEB ROUTES
  */
-$route->namespace("Source\App");
+$route->group(null);
 $route->get("/", "Web:home");
 $route->get("/sobre", "Web:about");
 
@@ -42,10 +43,12 @@ $route->get("/recuperar/{code}", "Web:reset");
 $route->post("/recuperar/resetar", "Web:reset");
 
 //optin
+$route->group(null);
 $route->get("/confirma", "Web:confirm");
 $route->get("/obrigado/{email}", "Web:success");
 
 //services
+$route->group(null);
 $route->get("/termos", "Web:terms");
 
 /**
@@ -70,23 +73,22 @@ $route->post("/onpaid", "App:onpaid");
 $route->post("/filter", "App:filter");
 $route->post("/profile", "App:profile");
 
-/*
+/**
  * ERROR ROUTES
  */
-$route->namespace("Source\App")->group("/ops");
+$route->group("/ops");
 $route->get("/{errcode}", "Web:error");
 
-/*
+/**
  * ROUTE
  */
 $route->dispatch();
 
-/*
+/**
  * ERROR REDIRECT
  */
 if ($route->error()) {
     $route->redirect("/ops/{$route->error()}");
 }
-
 
 ob_end_flush();
