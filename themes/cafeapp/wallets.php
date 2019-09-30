@@ -26,7 +26,7 @@
 
     </article>
 
-    <?php foreach ($wallets as $wallet): $balance = $wallet->balance() ?>
+    <?php foreach ($wallets as $wallet): $balance = $wallet->balanceMonth() ?>
         <article class="wallet radius <?= ($balance->balance == "positive" ? "gradient-green" : "gradient-red"); ?>">
             <span class="wallet_remove wallet_action icon-times-circle icon-notext"></span>
             <h2 class="icon-briefcase icon-notext"></h2>
