@@ -1,3 +1,4 @@
-/.ide
-/.vscode
+.ide
 .DS_Store
+
+storage/images/
