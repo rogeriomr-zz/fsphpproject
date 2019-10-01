@@ -61,8 +61,10 @@ $route->get("/receber/{status}/{category}/{date}", "App:income");
 $route->get("/pagar", "App:expense");
 $route->get("/pagar/{status}/{category}/{date}", "App:expense");
 $route->get("/fixas", "App:fixed");
+$route->get("/carteiras", "App:wallets");
 $route->get("/fatura/{invoice}", "App:invoice");
 $route->get("/perfil", "App:profile");
+$route->get("/assinatura", "App:signature");
 $route->get("/sair", "App:logout");
 
 $route->post("/dash", "App:dash");
@@ -73,6 +75,14 @@ $route->post("/support", "App:support");
 $route->post("/onpaid", "App:onpaid");
 $route->post("/filter", "App:filter");
 $route->post("/profile", "App:profile");
+$route->post("/wallets/{wallet}", "App:wallets");
+
+/**
+ * PAY ROUTES
+ */
+$route->group("/pay");
+$route->post("/create", "Pay:create");
+$route->post("/update", "Pay:update");
 
 /**
  * ERROR ROUTES

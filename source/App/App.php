@@ -8,6 +8,9 @@ use Source\Core\View;
 use Source\Models\Auth;
 use Source\Models\CafeApp\AppCategory;
 use Source\Models\CafeApp\AppInvoice;
+use Source\Models\CafeApp\AppOrder;
+use Source\Models\CafeApp\AppPlan;
+use Source\Models\CafeApp\AppSubscription;
 use Source\Models\CafeApp\AppWallet;
 use Source\Models\Post;
 use Source\Models\Report\Access;
@@ -16,7 +19,6 @@ use Source\Models\User;
 use Source\Support\Email;
 use Source\Support\Thumb;
 use Source\Support\Upload;
-use stdClass;
 
 /**
  * Class App
@@ -56,6 +58,9 @@ class App extends Controller
         }
     }
 
+    /**
+     * @param array|null $data
+     */
     public function dash(?array $data): void
     {
         if (!empty($data["wallet"])) {
@@ -68,7 +73,8 @@ class App extends Controller
             }
 
             $wallet = filter_var($data["wallet"], FILTER_VALIDATE_INT);
-            $getWallet = (new AppWallet())->find("user_id = :user AND id = :id",
+            $getWallet = (new AppWallet())->find(
+                "user_id = :user AND id = :id",
                 "user={$this->user->id}&id={$wallet}"
             )->count();
 
@@ -80,7 +86,6 @@ class App extends Controller
             return;
         }
 
-
         //CHART UPDATE
         $chartData = (new AppInvoice())->chartData($this->user);
         $categories = str_replace("'", "", explode(",", $chartData->categories));
@@ -89,16 +94,14 @@ class App extends Controller
             "income" => array_map("abs", explode(",", $chartData->income)),
             "expense" => array_map("abs", explode(",", $chartData->expense))
         ];
-        //ENDCHART
 
-        //WALLET UPDATE
+        //WALLET
         $wallet = (new AppInvoice())->balance($this->user);
         $wallet->wallet = str_price($wallet->wallet);
         $wallet->status = ($wallet->balance == "positive" ? "gradient-green" : "gradient-red");
         $wallet->income = str_price($wallet->income);
         $wallet->expense = str_price($wallet->expense);
         $json["wallet"] = $wallet;
-        //WALLET
 
         echo json_encode($json);
     }
@@ -123,18 +126,22 @@ class App extends Controller
         //INCOME && EXPENSE
         $whereWallet = "";
         if ((new Session())->has("walletfilter")) {
-            $whereWallet = "AND wallet_id = ". (new Session())->walletfilter;
+            $whereWallet = "AND wallet_id = " . (new Session())->walletfilter;
         }
 
         $income = (new AppInvoice())
-            ->find("user_id = :user AND type = 'income' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH) {$whereWallet}",
-                "user={$this->user->id}")
+            ->find(
+                "user_id = :user AND type = 'income' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH) {$whereWallet}",
+                "user={$this->user->id}"
+            )
             ->order("due_at")
             ->fetch(true);
 
         $expense = (new AppInvoice())
-            ->find("user_id = :user AND type = 'expense' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH) {$whereWallet}",
-                "user={$this->user->id}")
+            ->find(
+                "user_id = :user AND type = 'expense' AND status = 'unpaid' AND date(due_at) <= date(now() + INTERVAL 1 MONTH) {$whereWallet}",
+                "user={$this->user->id}"
+            )
             ->order("due_at")
             ->fetch(true);
         //END INCOME && EXPENSE
@@ -264,13 +271,83 @@ class App extends Controller
 
         $whereWallet = "";
         if ((new Session())->has("walletfilter")) {
-            $whereWallet = "AND wallet_id = ". (new Session())->walletfilter;
+            $whereWallet = "AND wallet_id = " . (new Session())->walletfilter;
         }
 
         echo $this->view->render("recurrences", [
             "head" => $head,
-            "invoices" => (new AppInvoice())->find("user_id = :user AND type IN('fixed_income', 'fixed_expense') {$whereWallet}",
-                "user={$this->user->id}")->fetch(true)
+            "invoices" => (new AppInvoice())->find(
+                "user_id = :user AND type IN('fixed_income', 'fixed_expense') {$whereWallet}",
+                "user={$this->user->id}"
+            )->fetch(true)
+        ]);
+    }
+
+    /**
+     * @param array|null $data
+     */
+    public function wallets(?array $data): void
+    {
+        //create
+        if (!empty($data["wallet"]) && !empty($data["wallet_name"])) {
+
+            $wallet = new AppWallet();
+            $wallet->user_id = $this->user->id;
+            $wallet->wallet = filter_var($data["wallet_name"], FILTER_SANITIZE_STRIPPED);
+            $wallet->save();
+
+            echo json_encode(["reload" => true]);
+            return;
+        }
+
+        //edit
+        if (!empty($data["wallet"]) && !empty($data["wallet_edit"])) {
+            $wallet = (new AppWallet())->find(
+                "user_id = :user AND id = :id",
+                "user={$this->user->id}&id={$data["wallet"]}"
+            )->fetch();
+
+            if ($wallet) {
+                $wallet->wallet = filter_var($data["wallet_edit"], FILTER_SANITIZE_STRIPPED);
+                $wallet->save();
+            }
+
+            echo json_encode(["wallet_edit" => true]);
+            return;
+        }
+
+        //delete
+        if (!empty($data["wallet"]) && !empty($data["wallet_remove"])) {
+            $wallet = (new AppWallet())->find(
+                "user_id = :user AND id = :id",
+                "user={$this->user->id}&id={$data["wallet"]}"
+            )->fetch();
+
+            if ($wallet) {
+                $wallet->destroy();
+                (new Session())->unset("walletfilter");
+            }
+
+            echo json_encode(["wallet_remove" => true]);
+            return;
+        }
+
+        $head = $this->seo->render(
+            "Minhas carteiras - " . CONF_SITE_NAME,
+            CONF_SITE_DESC,
+            url(),
+            theme("/assets/images/share.jpg"),
+            false
+        );
+
+        $wallets = (new AppWallet())
+            ->find("user_id = :user", "user={$this->user->id}")
+            ->order("wallet")
+            ->fetch(true);
+
+        echo $this->view->render("wallets", [
+            "head" => $head,
+            "wallets" => $wallets
         ]);
     }
 
@@ -282,6 +359,29 @@ class App extends Controller
         if (request_limit("applaunch", 20, 60 * 5)) {
             $json["message"] = $this->message->warning("Foi muito rápido {$this->user->first_name}! Por favor aguarde 5 minutos para novos lançamentos.")->render();
             echo json_encode($json);
+            return;
+        }
+
+        $wallet = (new AppWallet())->find(
+            "user_id = :user AND id = :id",
+            "user={$this->user->id}&id={$data["wallet"]}"
+        )->fetch();
+
+        if (!$wallet) {
+            $json["message"] = $this->message->warning("Ooops, você tentou lançar em uma carteira que não existe ou está indisponível no momento.")->render();
+            echo json_encode($json);
+            return;
+        }
+
+        //PREMIUM RESOURCE
+        $subscribe = (new AppSubscription())->find(
+            "user_id = :user AND status != :status",
+            "user={$this->user->id}&status=canceled"
+        );
+
+        if (!$wallet->free && !$subscribe->count()) {
+            $this->message->error("Sua carteira {$wallet->wallet} é PRO {$this->user->first_name}. Para controla-la é preciso ser PRO. Assine abaixo...")->flash();
+            echo json_encode(["redirect" => url("/app/assinatura")]);
             return;
         }
 
@@ -305,8 +405,8 @@ class App extends Controller
         $invoice->currency = $data["currency"];
         $invoice->due_at = $data["due_at"];
         $invoice->repeat_when = $data["repeat_when"];
-        $invoice->period = ($data["period"] ?? "month");
-        $invoice->enrollments = ($data["enrollments"] ?? 1);
+        $invoice->period = (!empty($data["period"]) ? $data["period"] : "month");
+        $invoice->enrollments = (!empty($data["enrollments"]) ? $data["enrollments"] : 1);
         $invoice->enrollment_of = 1;
         $invoice->status = ($data["repeat_when"] == "fixed" ? "paid" : $status);
 
@@ -418,8 +518,10 @@ class App extends Controller
     public function invoice(array $data): void
     {
         if (!empty($data["update"])) {
-            $invoice = (new AppInvoice())->find("user_id = :user AND id = :id",
-                "user={$this->user->id}&id={$data["invoice"]}")->fetch();
+            $invoice = (new AppInvoice())->find(
+                "user_id = :user AND id = :id",
+                "user={$this->user->id}&id={$data["invoice"]}"
+            )->fetch();
 
             if (!$invoice) {
                 $json["message"] = $this->message->error("Ooops! Não foi possível carregar a fatura {$this->user->first_name}. Você pode tentar novamente.")->render();
@@ -448,8 +550,10 @@ class App extends Controller
                 return;
             }
 
-            $invoiceOf = (new AppInvoice())->find("user_id = :user AND invoice_of = :of",
-                "user={$this->user->id}&of={$invoice->id}")->fetch(true);
+            $invoiceOf = (new AppInvoice())->find(
+                "user_id = :user AND invoice_of = :of",
+                "user={$this->user->id}&of={$invoice->id}"
+            )->fetch(true);
 
             if (!empty($invoiceOf) && in_array($invoice->type, ["fixed_income", "fixed_expense"])) {
                 foreach ($invoiceOf as $invoiceItem) {
@@ -484,8 +588,10 @@ class App extends Controller
             false
         );
 
-        $invoice = (new AppInvoice())->find("user_id = :user AND id = :invoice",
-            "user={$this->user->id}&invoice={$data["invoice"]}")->fetch();
+        $invoice = (new AppInvoice())->find(
+            "user_id = :user AND id = :invoice",
+            "user={$this->user->id}&invoice={$data["invoice"]}"
+        )->fetch();
 
         if (!$invoice) {
             $this->message->error("Ooops! Você tentou acessar uma fatura que não existe")->flash();
@@ -501,7 +607,7 @@ class App extends Controller
                 ->fetch(true),
             "categories" => (new AppCategory())
                 ->find("type = :type", "type={$invoice->category()->type}")
-                ->order("order_by")
+                ->order("order_by, name")
                 ->fetch(true)
         ]);
     }
@@ -511,8 +617,10 @@ class App extends Controller
      */
     public function remove(array $data): void
     {
-        $invoice = (new AppInvoice())->find("user_id = :user AND id = :invoice",
-            "user={$this->user->id}&invoice={$data["invoice"]}")->fetch();
+        $invoice = (new AppInvoice())->find(
+            "user_id = :user AND id = :invoice",
+            "user={$this->user->id}&invoice={$data["invoice"]}"
+        )->fetch();
 
         if ($invoice) {
             $invoice->destroy();
@@ -524,7 +632,8 @@ class App extends Controller
     }
 
     /**
-     * @param array|null $array
+     * @param array|null $data
+     * @throws \Exception
      */
     public function profile(?array $data): void
     {
@@ -593,7 +702,7 @@ class App extends Controller
     /**
      * APP LOGOUT
      */
-    public function logout()
+    public function logout(): void
     {
         $this->message->info("Você saiu com sucesso " . Auth::user()->first_name . ". Volte logo :)")->flash();
 

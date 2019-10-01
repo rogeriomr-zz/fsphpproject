@@ -5,7 +5,6 @@ namespace Source\Models\CafeApp;
 use Source\Core\Model;
 use Source\Core\Session;
 use Source\Models\User;
-use stdClass;
 
 /**
  * Class AppInvoice
@@ -124,7 +123,7 @@ class AppInvoice extends Model
      */
     public function balance(User $user): object
     {
-        $balance = new stdClass();
+        $balance = new \stdClass();
         $balance->income = 0;
         $balance->expense = 0;
         $balance->wallet = 0;
@@ -136,7 +135,7 @@ class AppInvoice extends Model
             "
                 (SELECT SUM(value) FROM app_invoices WHERE user_id = :user AND status = :status AND type = 'income' {$this->wallet}) AS income,
                 (SELECT SUM(value) FROM app_invoices WHERE user_id = :user AND status = :status AND type = 'expense' {$this->wallet}) AS expense
-             "
+            "
         )->fetch();
 
         if ($find) {
@@ -149,19 +148,24 @@ class AppInvoice extends Model
         return $balance;
     }
 
+    /**
+     * @param AppWallet $wallet
+     * @return object
+     */
     public function balanceWallet(AppWallet $wallet): object
     {
-        $balance = new stdClass();
+        $balance = new \stdClass();
         $balance->income = 0;
         $balance->expense = 0;
         $balance->wallet = 0;
         $balance->balance = "positive";
 
-        $find = $this->find("user_id = :user AND status = :status",
+        $find = $this->find(
+            "user_id = :user AND status = :status",
             "user={$wallet->user_id}&status=paid",
             "
-                (SELECT SUM(value) FROM app_invoices WHERE user_id = :user AND wallet_id = {$wallet->id} and status = :status AND type = 'income') AS income,
-                (SELECT SUM(value) FROM app_invoices WHERE user_id = :user AND wallet_id = {$wallet->id} and status = :status AND type = 'exxpense') AS expense
+                (SELECT SUM(value) FROM app_invoices WHERE user_id = :user AND wallet_id = {$wallet->id} AND status = :status AND type = 'income') AS income,
+                (SELECT SUM(value) FROM app_invoices WHERE user_id = :user AND wallet_id = {$wallet->id} AND status = :status AND type = 'expense') AS expense
             "
         )->fetch();
 
