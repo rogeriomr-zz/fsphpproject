@@ -50,7 +50,6 @@ abstract class Model
         $this->entity = $entity;
         $this->protected = array_merge($protected, ['created_at', "updated_at"]);
         $this->required = $required;
-
         $this->message = new Message();
     }
 
