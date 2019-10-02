@@ -10,16 +10,11 @@ use Source\Core\Model;
  */
 class Post extends Model
 {
-    /** @var bool */
-    private $all;
-
     /**
      * Post constructor.
-     * @param bool $all = ignore status and post_at
      */
-    public function __construct(bool $all = false)
+    public function __construct()
     {
-        $this->all = $all;
         parent::__construct("posts", ["id"], ["title", "uri", "subtitle", "content"]);
     }
 
@@ -29,7 +24,7 @@ class Post extends Model
      * @param string $columns
      * @return mixed|Model
      */
-    public function find(?string $terms = null, ?string $params = null, string $columns = "*")
+    public function findPost(?string $terms = null, ?string $params = null, string $columns = "*")
     {
         if (!$this->all) {
             $terms = "status = :status AND post_at <= NOW()" . ($terms ? " AND {$terms}" : "");

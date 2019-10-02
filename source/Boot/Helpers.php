@@ -138,9 +138,9 @@ function str_limit_chars(string $string, int $limit, string $pointer = "..."): s
  * @param string $price
  * @return string
  */
-function str_price(string $price): string
+function str_price(?string $price): string
 {
-    return number_format($price, 2, ",", ".");
+    return number_format((!empty($price) ? $price : 0), 2, ",", ".");
 }
 
 /**
@@ -245,9 +245,13 @@ function theme(string $path = null, string $theme = CONF_VIEW_THEME): string
  * @param int|null $height
  * @return string
  */
-function image(string $image, int $width, int $height = null): string
+function image(?string $image, int $width, int $height = null): ?string
 {
-    return url() . "/" . (new \Source\Support\Thumb())->make($image, $width, $height);
+    if ($image) {
+        return url() . "/" . (new \Source\Support\Thumb())->make($image, $width, $height);
+    }
+
+    return null;
 }
 
 /**
@@ -262,8 +266,9 @@ function image(string $image, int $width, int $height = null): string
  * @return string
  * @throws Exception
  */
-function date_fmt(string $date = "now", string $format = "d/m/Y H\hi"): string
+function date_fmt(?string $date, string $format = "d/m/Y H\hi"): string
 {
+    $date = (empty($date) ? "now" : $date);
     return (new DateTime($date))->format($format);
 }
 
@@ -272,8 +277,9 @@ function date_fmt(string $date = "now", string $format = "d/m/Y H\hi"): string
  * @return string
  * @throws Exception
  */
-function date_fmt_br(string $date = "now"): string
+function date_fmt_br(?string $date): string
 {
+    $date = (empty($date) ? "now" : $date);
     return (new DateTime($date))->format(CONF_DATE_BR);
 }
 
@@ -282,9 +288,28 @@ function date_fmt_br(string $date = "now"): string
  * @return string
  * @throws Exception
  */
-function date_fmt_app(string $date = "now"): string
+function date_fmt_app(?string $date): string
 {
+    $date = (empty($date) ? "now" : $date);
     return (new DateTime($date))->format(CONF_DATE_APP);
+}
+
+/**
+ * @param string|null $date
+ * @return string|null
+ */
+function date_fmt_back(?string $date): ?string
+{
+    if (!$date) {
+        return null;
+    }
+
+    if (strpos($date, " ")) {
+        $date = explode(" ", $date);
+        return implode("-", array_reverse(explode("/", $date[0]))) . " " . $date[1];
+    }
+
+    return implode("-", array_reverse(explode("/", $date)));
 }
 
 /**

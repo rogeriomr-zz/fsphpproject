@@ -145,7 +145,7 @@ class App extends Controller
         //END WALLET
 
         //POSTS
-        $posts = (new Post())->find()->limit(3)->order("post_at DESC")->fetch(true);
+        $posts = (new Post())->findPost()->limit(3)->order("post_at DESC")->fetch(true);
         //END POSTS
 
         echo $this->view->render("home", [
