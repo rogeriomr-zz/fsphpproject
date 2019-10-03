@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69c26dd1-5e46-436a-8a6f-5ac8fbd6b27e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/App/App.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/App/App.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/Models/CafeApp/AppInvoice.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/Models/CafeApp/AppInvoice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/Models/CafeApp/AppWallet.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/Models/CafeApp/AppWallet.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/cafeapp/wallets.php" beforeDir="false" afterPath="$PROJECT_DIR$/themes/cafeapp/wallets.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Models/Auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/Models/Auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/Models/User.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,6 +61,7 @@
       <option name="presentableId" value="Default" />
       <updated>1569863896793</updated>
       <workItem from="1569863906817" duration="68000" />
+      <workItem from="1570038710420" duration="5000" />
     </task>
     <servers />
   </component>
@@ -75,7 +73,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
