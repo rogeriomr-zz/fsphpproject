@@ -137,12 +137,12 @@
                         <span class="legend">*Categoria:</span>
                         <select name="category" required>
                             <?php foreach ($categories as $category):
-                                $categoryId = $post->category_id;
+                                $categoryId = $post->category;
                                 $select = function ($value) use ($categoryId) {
                                     return ($categoryId == $value ? "selected" : "");
                                 };
                                 ?>
-                                <option <?= $select($post->category); ?>
+                                <option <?= $select($category->id); ?>
                                         value="<?= $category->id; ?>"><?= $category->title; ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -158,7 +158,7 @@
                                 };
                                 ?>
                                 <option <?= $select($post->author); ?>
-                                        value="<?= $author->id; ?>"><?= $post->author()->full_name(); ?></option>
+                                    value="<?= $author->id; ?>"><?= $author->full_name(); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </label>
@@ -182,7 +182,7 @@
 
                     <label class="label">
                         <span class="legend">Data de publicação:</span>
-                        <input class="mask-datetime" type="text" name="post_at" value="<?= date("d/m/Y H:i"); ?>"
+                        <input class="mask-datetime" type="text" name="post_at" value="<?= date_fmt($post->post_at, "d/m/Y H:i"); ?>"
                                required/>
                     </label>
                 </div>
