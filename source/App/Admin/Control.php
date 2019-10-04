@@ -6,15 +6,22 @@ use Source\Models\CafeApp\AppPlan;
 use Source\Models\CafeApp\AppSubscription;
 use Source\Support\Pager;
 
+/**
+ * Class Control
+ * @package Source\App\Admin
+ */
 class Control extends Admin
 {
+    /**
+     * Control constructor.
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
     /**
-     *
+     * Control Home
      */
     public function home(): void
     {
