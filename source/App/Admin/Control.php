@@ -64,7 +64,10 @@ class Control extends Admin
         if (!empty($data["search"]) && $data["search"] != "all") {
             $search = filter_var($data["search"], FILTER_SANITIZE_STRIPPED);
             $subscriptions = (new AppSubscription())->find("user_id IN(SELECT id FROM users WHERE MATCH(first_name, last_name, email) AGAINST(:s))", "s={$search}");
-        }
+            if (!$subscriptions->count()) {
+                $this->message->info("Sua pesquisa não retornou resultados")->flash();
+                redirect("/admin/blog/home");
+            }
 
         $all = ($search ?? "all");
         $pager = new Pager(url("admin/control/subscriptions/{$all}/"));
