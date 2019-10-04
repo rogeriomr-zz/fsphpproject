@@ -14,7 +14,7 @@ class Control extends Admin
     }
 
     /**
-     * 
+     *
      */
     public function home(): void
     {
@@ -22,7 +22,7 @@ class Control extends Admin
             CONF_SITE_NAME . " | Control",
             CONF_SITE_DESC,
             url("/admin"),
-            theme("/assets/images/image.jpg", CONF_VIEW_ADMIN),
+            theme("/admin/assets/images/image.jpg", CONF_VIEW_ADMIN),
             false
         );
 
@@ -67,7 +67,7 @@ class Control extends Admin
             CONF_SITE_NAME . " | Assinantes",
             CONF_SITE_DESC,
             url("/admin"),
-            theme("/assets/images/image.jpg", CONF_VIEW_ADMIN),
+            theme("/admin/assets/images/image.jpg", CONF_VIEW_ADMIN),
             false
         );
 
@@ -105,9 +105,9 @@ class Control extends Admin
             $subscriptionUpdate->last_charge = date_fmt_back($data["last_charge"]);
 
             if (!$subscriptionUpdate->save()) {
-               $json["message"] = $subscriptionUpdate->message()->render();
-               echo json_encode($json);
-               return;
+                $json["message"] = $subscriptionUpdate->message()->render();
+                echo json_encode($json);
+                return;
             }
 
             $json["message"] = $this->message->success("Assinatura atualizada com sucesso")->render();
@@ -131,7 +131,7 @@ class Control extends Admin
             CONF_SITE_NAME . " | Assinatura de ". $subscription->user()->full_name(),
             CONF_SITE_DESC,
             url("/admin"),
-            theme("/assets/images/image.jpg", CONF_VIEW_ADMIN),
+            theme("/admin/assets/images/image.jpg", CONF_VIEW_ADMIN),
             false
         );
 
@@ -149,7 +149,24 @@ class Control extends Admin
      */
     public function plans(?array $data): void
     {
-        
+        $plans = (new AppPlan())->find();
+        $pager = new Pager(url("/admin/control/plans/"));
+        $pager->pager($plans->count(), 5, (!empty($data["page"]) ? $data["page"] : 1));
+
+        $head = $this->seo->render(
+            CONF_SITE_NAME . " | Planos de Assinatura",
+            CONF_SITE_DESC,
+            url("/admin"),
+            theme("/admin/assets/images/image.jpg", CONF_VIEW_ADMIN),
+            false
+        );
+
+        echo $this->view->render("widgets/control/plans", [
+            "app" => "control/plans",
+            "head" => $head,
+            "plans" => $plans->order("status ASC, created_at DESC")->limit($pager->limit())->offset($pager->offset())->fetch(true),
+            "paginator" => $pager->render()
+        ]);
     }
 
     /**
@@ -157,7 +174,104 @@ class Control extends Admin
      */
     public function plan(?array $data): void
     {
-        
+        //create plan
+        if (!empty($data["action"]) && $data["action"] == "create") {
+            $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+
+            $planCreate = new AppPlan();
+            $planCreate->name = $data["name"];
+            $planCreate->period = $data["period"];
+            $planCreate->period_str = $data["period_str"];
+            $planCreate->price = $data["price"];
+            $planCreate->status = $data["status"];
+
+            if (!$planCreate->save()) {
+                $json["message"] = $planCreate->message()->render();
+                echo json_decode($json);
+                return;
+            }
+
+            $this->message->success("Plano criado com sucesso. Confira...")->flash();
+            $json["redirect"] = url("/admin/control/plan/{$planCreate->id}");
+
+            echo json_encode($json);
+            return;
+        }
+
+        //update plan
+        if (!empty($data["action"]) && $data["action"] == "update") {
+            $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+            $planEdit = (new AppPlan())->findById($data["plan_id"]);
+
+            if (!$planEdit) {
+                $this->message->error("Você tentou editar um plano que não existe ou foi removido")->flash();
+                echo json_encode(["redirect" => url("/admin/control/plans")]);
+                return;
+            }
+
+            $planEdit->name = $data["name"];
+            $planEdit->period = $data["period"];
+            $planEdit->period_str = $data["period_str"];
+            $planEdit->price = $data["price"];
+            $planEdit->status = $data["status"];
+
+            if (!$planEdit->save()) {
+                $json["message"] = $planEdit->message()->render();
+                echo json_decode($json);
+                return;
+            }
+
+            $json["message"] = $this->message->success("Plano atualizado com sucesso...")->render();
+            echo json_encode($json);
+
+            return;
+        }
+
+        //delete plan
+        if (!empty($data["action"]) && $data["action"] == "delete") {
+            $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+            $planDelete = (new AppPlan())->findById($data["plan_id"]);
+
+            if (!$planDelete) {
+                $this->message->error("Você tentou excluir um plano que não existe ou que já foi removido")->flash();
+                echo json_encode(["redirect" => url("/admin/control/plans")]);
+                return;
+            }
+
+            if ($planDelete->subscribers(null)->count()) {
+                $json["message"] = $this->message->warning("Não é possível remover planos com assinaturas...")->render();
+                echo json_encode($json);
+                return;
+            }
+
+            $planDelete->destroy();
+            $this->message->success("Plano removido com sucesso...")->flash();
+            $json["redirect"] = url("/admin/control/plans");
+
+            echo json_encode($json);
+            return;
+        }
+
+        //read plan
+        $planEdit = null;
+        if (!empty($data["plan_id"])) {
+            $planId = filter_var($data["plan_id"], FILTER_VALIDATE_INT);
+            $planEdit = (new AppPlan())->findById($planId);
+        }
+
+        $head = $this->seo->render(
+            CONF_SITE_NAME . " | Gerenciador Plano",
+            CONF_SITE_DESC,
+            url("/admin"),
+            theme("/admin/assets/images/image.jpg", CONF_VIEW_ADMIN),
+            false
+        );
+
+        echo $this->view->render("widgets/control/plan", [
+            "app" => "control/plans",
+            "head" => $head,
+            "plan" => $planEdit,
+            "subscribers" => ($planEdit ? $planEdit->subscribers(null)->count() : null)
+        ]);
     }
 }
-
