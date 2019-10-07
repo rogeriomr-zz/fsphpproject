@@ -137,34 +137,34 @@ class Blog extends Admin
         if (!empty($data["action"]) && $data["action"] == "update") {
             $content = $data["content"];
             $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
-            $postEdit = (new Post())->findById($data["post_id"]);
+            $postUpdate = (new Post())->findById($data["post_id"]);
 
-            if (!$postEdit) {
+            if (!$postUpdate) {
                 $this->message->error('Você tentou atualizar um post que não existe ou foi removido')->flash();
                 echo json_encode(["redirect" => url("/admin/blog/home")]);
                 return;
             }
 
-            $postEdit->author = $data["author"];
-            $postEdit->category = $data["category"];
-            $postEdit->title = $data["title"];
-            $postEdit->uri = str_slug($postEdit->title);
-            $postEdit->subtitle = $data["subtitle"];
-            $postEdit->content = str_replace(["{title}"], [$postEdit->title], $content);
-            $postEdit->video = $data["video"];
-            $postEdit->status = $data["status"];
-            $postEdit->post_at = date_fmt_back($data["post_at"]);
+            $postUpdate->author = $data["author"];
+            $postUpdate->category = $data["category"];
+            $postUpdate->title = $data["title"];
+            $postUpdate->uri = str_slug($postUpdate->title);
+            $postUpdate->subtitle = $data["subtitle"];
+            $postUpdate->content = str_replace(["{title}"], [$postUpdate->title], $content);
+            $postUpdate->video = $data["video"];
+            $postUpdate->status = $data["status"];
+            $postUpdate->post_at = date_fmt_back($data["post_at"]);
 
             //upload cover
             if (!empty($_FILES["cover"])) {
-                if ($postEdit->cover && file_exists(__DIR__."/../../../" . CONF_UPLOAD_DIR . "/{$postEdit->cover}")) {
-                    unlink(__DIR__."/../../../" . CONF_UPLOAD_DIR . "/{$postEdit->cover}");
-                    (new Thumb())->flush($postEdit->cover);
+                if ($postUpdate->cover && file_exists(__DIR__."/../../../" . CONF_UPLOAD_DIR . "/{$postUpdate->cover}")) {
+                    unlink(__DIR__."/../../../" . CONF_UPLOAD_DIR . "/{$postUpdate->cover}");
+                    (new Thumb())->flush($postUpdate->cover);
                 }
 
                 $files = $_FILES["cover"];
                 $upload = new Upload();
-                $image = $upload->image($files, $postEdit->title);
+                $image = $upload->image($files, $postUpdate->title);
 
                 if (!$image) {
                     $json["message"] = $upload->message()->render();
@@ -172,11 +172,11 @@ class Blog extends Admin
                     return;
                 }
 
-                $postEdit->cover = $image;
+                $postUpdate->cover = $image;
             }
 
-            if (!$postEdit->save()) {
-                $json["message"] = $postEdit->message()->render();
+            if (!$postUpdate->save()) {
+                $json["message"] = $postUpdate->message()->render();
                 echo json_encode($json);
                 return;
             }
@@ -211,14 +211,14 @@ class Blog extends Admin
             return;
         }
 
-        $postEdit = null;
+        $postUpdate = null;
         if (!empty($data["post_id"])) {
             $postId = filter_var($data["post_id"], FILTER_VALIDATE_INT);
-            $postEdit = (new Post())->findById($postId);
+            $postUpdate = (new Post())->findById($postId);
         }
 
         $head = $this->seo->render(
-            CONF_SITE_NAME . " | " . ($postEdit->title ?? "Novo Artigo"),
+            CONF_SITE_NAME . " | " . ($postUpdate->title ?? "Novo Artigo"),
             CONF_SITE_DESC,
             url("/admin"),
             theme("/admin/assets/images/image.jpg", CONF_VIEW_ADMIN),
@@ -228,7 +228,7 @@ class Blog extends Admin
         echo $this->view->render("widgets/blog/post", [
             "app" => "blog/post",
             "head" => $head,
-            "post" => $postEdit,
+            "post" => $postUpdate,
             "categories" => (new Category())->find("type = :type", "type=post")->order("title")->fetch(true),
             "authors" => (new User())->find("level >= :level", "level=5")->fetch(true)
         ]);
@@ -304,27 +304,27 @@ class Blog extends Admin
         //update
         if (!empty($data["action"]) && $data["action"] == "update") {
             $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
-            $categoryEdit = (new Category())->findById($data["category_id"]);
+            $categoryUpdate = (new Category())->findById($data["category_id"]);
 
-            if (!$categoryEdit) {
+            if (!$categoryUpdate) {
                 $this->message->error("Você tentou editar uma categoria que não existe ou foi removida")->flash();
                 echo json_encode(["redirect" => url("/admin/blog/categories")]);
                 return;
             }
 
-            $categoryEdit->title = $data["title"];
-            $categoryEdit->uri = str_slug($categoryEdit->title);
-            $categoryEdit->description = $data["description"];
+            $categoryUpdate->title = $data["title"];
+            $categoryUpdate->uri = str_slug($categoryUpdate->title);
+            $categoryUpdate->description = $data["description"];
 
             //upload cover
             if (!empty($_FILES["cover"])) {
-                if ($categoryEdit->cover && file_exists(__DIR__ . "/../../../" . CONF_UPLOAD_DIR . "/{$categoryEdit->cover}")) {
-                    unlink(__DIR__ . "/../../../" . CONF_UPLOAD_DIR . "/{$categoryEdit->cover}");
-                    (new Thumb())->flush($categoryEdit->cover);
+                if ($categoryUpdate->cover && file_exists(__DIR__ . "/../../../" . CONF_UPLOAD_DIR . "/{$categoryUpdate->cover}")) {
+                    unlink(__DIR__ . "/../../../" . CONF_UPLOAD_DIR . "/{$categoryUpdate->cover}");
+                    (new Thumb())->flush($categoryUpdate->cover);
                 }
                 $files = $_FILES["cover"];
                 $upload = new Upload();
-                $image = $upload->image($files, $categoryEdit->title);
+                $image = $upload->image($files, $categoryUpdate->title);
 
                 if (!$image) {
                     $json["message"] = $upload->message()->render();
@@ -332,11 +332,11 @@ class Blog extends Admin
                     return;
                 }
 
-                $categoryEdit->cover = $image;
+                $categoryUpdate->cover = $image;
             }
 
-            if (!$categoryEdit->save()) {
-                $json["message"] = $categoryEdit->message()->render();
+            if (!$categoryUpdate->save()) {
+                $json["message"] = $categoryUpdate->message()->render();
                 echo json_encode($json);
                 return;
             }
@@ -378,10 +378,10 @@ class Blog extends Admin
             return;
         }
 
-        $categoryEdit = null;
+        $categoryUpdate = null;
         if (!empty($data["category_id"])) {
             $categoryId = filter_var($data["category_id"], FILTER_VALIDATE_INT);
-            $categoryEdit = (new Category())->findById($categoryId);
+            $categoryUpdate = (new Category())->findById($categoryId);
         }
 
         $head = $this->seo->render(
@@ -395,7 +395,7 @@ class Blog extends Admin
         echo $this->view->render("widgets/blog/category", [
             "app" => "blog/categories",
             "head" => $head,
-            "category" => $categoryEdit
+            "category" => $categoryUpdate
         ]);
     }
 }

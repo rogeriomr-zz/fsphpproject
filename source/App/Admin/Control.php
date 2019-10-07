@@ -68,6 +68,7 @@ class Control extends Admin
                 $this->message->info("Sua pesquisa não retornou resultados")->flash();
                 redirect("/admin/blog/home");
             }
+        }
 
         $all = ($search ?? "all");
         $pager = new Pager(url("admin/control/subscriptions/{$all}/"));
@@ -211,22 +212,22 @@ class Control extends Admin
         //update plan
         if (!empty($data["action"]) && $data["action"] == "update") {
             $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
-            $planEdit = (new AppPlan())->findById($data["plan_id"]);
+            $planUpdate = (new AppPlan())->findById($data["plan_id"]);
 
-            if (!$planEdit) {
+            if (!$planUpdate) {
                 $this->message->error("Você tentou editar um plano que não existe ou foi removido")->flash();
                 echo json_encode(["redirect" => url("/admin/control/plans")]);
                 return;
             }
 
-            $planEdit->name = $data["name"];
-            $planEdit->period = $data["period"];
-            $planEdit->period_str = $data["period_str"];
-            $planEdit->price = $data["price"];
-            $planEdit->status = $data["status"];
+            $planUpdate->name = $data["name"];
+            $planUpdate->period = $data["period"];
+            $planUpdate->period_str = $data["period_str"];
+            $planUpdate->price = $data["price"];
+            $planUpdate->status = $data["status"];
 
-            if (!$planEdit->save()) {
-                $json["message"] = $planEdit->message()->render();
+            if (!$planUpdate->save()) {
+                $json["message"] = $planUpdate->message()->render();
                 echo json_decode($json);
                 return;
             }
@@ -263,10 +264,10 @@ class Control extends Admin
         }
 
         //read plan
-        $planEdit = null;
+        $planUpdate = null;
         if (!empty($data["plan_id"])) {
             $planId = filter_var($data["plan_id"], FILTER_VALIDATE_INT);
-            $planEdit = (new AppPlan())->findById($planId);
+            $planUpdate = (new AppPlan())->findById($planId);
         }
 
         $head = $this->seo->render(
@@ -280,8 +281,8 @@ class Control extends Admin
         echo $this->view->render("widgets/control/plan", [
             "app" => "control/plans",
             "head" => $head,
-            "plan" => $planEdit,
-            "subscribers" => ($planEdit ? $planEdit->subscribers(null)->count() : null)
+            "plan" => $planUpdate,
+            "subscribers" => ($planUpdate ? $planUpdate->subscribers(null)->count() : null)
         ]);
     }
 }

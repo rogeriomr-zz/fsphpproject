@@ -73,20 +73,19 @@ class Faq extends Admin
         //update
         if (!empty($data["action"]) && $data["action"] == "update") {
             $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+            $channelUpdate = (new Channel())->findById($data["channel_id"]);
 
-            $channelEdit = (new Channel())->findById($data["channel_id"]);
-
-            if (!$channelEdit) {
+            if (!$channelUpdate) {
                 $this->message->error("Você tentou editar um canal que nao existe ou foi removido")->flash();
                 echo json_encode(["redirect" => url("/admin/faq/home")]);
                 return;
             }
 
-            $channelEdit->channel = $data["channel"];
-            $channelEdit->description = $data["description"];
+            $channelUpdate->channel = $data["channel"];
+            $channelUpdate->description = $data["description"];
 
-            if (!$channelEdit->save()) {
-                $json["message"] = $channelEdit->message()->render();
+            if (!$channelUpdate->save()) {
+                $json["message"] = $channelUpdate->message()->render();
                 echo json_encode($json);
                 return;
             }
@@ -116,14 +115,14 @@ class Faq extends Admin
             return;
         }
 
-        $channelEdit = null;
+        $channelUpdate = null;
         if (!empty($data["channel_id"])) {
             $channelId = filter_var($data["channel_id"], FILTER_VALIDATE_INT);
-            $channelEdit = (new Channel())->findById($channelId);
+            $channelUpdate = (new Channel())->findById($channelId);
         }
 
         $head = $this->seo->render(
-            CONF_SITE_NAME . " | " . ($channelEdit ? "FAQ: {$channelEdit->channel}" : "FAQ: Novo Canal"),
+            CONF_SITE_NAME . " | " . ($channelUpdate ? "FAQ: {$channelUpdate->channel}" : "FAQ: Novo Canal"),
             CONF_SITE_DESC,
             url("/admin"),
             theme("/admin/assets/images/image.jpg", CONF_VIEW_ADMIN),
@@ -133,7 +132,7 @@ class Faq extends Admin
         echo $this->view->render("widgets/faqs/channel", [
             "app" => "faq/home",
             "head" => $head,
-            "channel" => $channelEdit
+            "channel" => $channelUpdate
         ]);
     }
 
@@ -167,22 +166,21 @@ class Faq extends Admin
         //update
         if (!empty($data["action"]) && $data["action"] == "update") {
             $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
+            $questionUpdate = (new Question())->findById($data["question_id"]);
 
-            $questionEdit = (new Question())->findById($data["question_id"]);
-
-            if (!$questionEdit) {
+            if (!$questionUpdate) {
                 $this->message->error("Você tentou editar uma pergunta que não existe ou foi removida")->flash();
                 echo json_encode(["redirect" => url("/admin/faq/home")]);
                 return;
             }
 
-            $questionEdit->channel_id = $data["channel_id"];
-            $questionEdit->question = $data["question"];
-            $questionEdit->response = $data["response"];
-            $questionEdit->order_by = $data["order_by"];
+            $questionUpdate->channel_id = $data["channel_id"];
+            $questionUpdate->question = $data["question"];
+            $questionUpdate->response = $data["response"];
+            $questionUpdate->order_by = $data["order_by"];
 
-            if (!$questionEdit->save()) {
-                $json["message"] = $questionEdit->message()->render();
+            if (!$questionUpdate->save()) {
+                $json["message"] = $questionUpdate->message()->render();
                 echo json_encode($json);
                 return;
             }
@@ -195,7 +193,6 @@ class Faq extends Admin
         //delete
         if (!empty($data["action"]) && $data["action"] == "delete") {
             $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
-
             $questionDelete = (new Question())->findById($data["question_id"]);
 
             if (!$questionDelete) {
