@@ -53,7 +53,7 @@ class Control extends Admin
     {
         //search redirect
         if (!empty($data["s"])) {
-            $s = filter_var($data["s"], FILTER_SANITIZE_STRIPPED);
+            $s = str_search($data["s"]);
             echo json_encode(["redirect" => url("/admin/control/subscriptions/{$s}/1")]);
             return;
         }
@@ -61,8 +61,8 @@ class Control extends Admin
         $search = null;
         $subscriptions = (new AppSubscription())->find();
 
-        if (!empty($data["search"]) && $data["search"] != "all") {
-            $search = filter_var($data["search"], FILTER_SANITIZE_STRIPPED);
+        if (!empty($data["search"]) && str_search($data["search"]) != "all") {
+            $search = str_search($data["search"]);
             $subscriptions = (new AppSubscription())->find("user_id IN(SELECT id FROM users WHERE MATCH(first_name, last_name, email) AGAINST(:s))", "s={$search}");
             if (!$subscriptions->count()) {
                 $this->message->info("Sua pesquisa não retornou resultados")->flash();
@@ -139,7 +139,7 @@ class Control extends Admin
         }
 
         $head = $this->seo->render(
-            CONF_SITE_NAME . " | Assinatura de ". $subscription->user()->full_name(),
+            CONF_SITE_NAME . " | Assinatura de ". $subscription->user()->fullName(),
             CONF_SITE_DESC,
             url("/admin"),
             theme("/admin/assets/images/image.jpg", CONF_VIEW_ADMIN),

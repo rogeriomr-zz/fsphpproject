@@ -15,10 +15,10 @@ class ComposerStaticInitd0ccecf323efd3f4f0c8456fa7297b6f
         'bdc465a053da7f7ddb072631f6d41d45' => __DIR__ . '/..' . '/league/plates/src/Extension/LayoutSections/layout-sections.php',
         'afa76803f24616d7599be3b7b0846adc' => __DIR__ . '/..' . '/league/plates/src/Extension/Folders/folders.php',
         '16c5be35e32c6cf916d875518b909210' => __DIR__ . '/..' . '/league/plates/src/Util/util.php',
-        '2e936e69927f30bada5100213d6564b5' => __DIR__ . '/../..' . '/source/Boot/Config.php',
-        '14811e05f27af001e4b56a83b92b979f' => __DIR__ . '/../..' . '/source/Boot/Helpers.php',
-        '40b905528204cad84950fc2aec0b2677' => __DIR__ . '/../..' . '/source/Boot/Minify/Web.php',
-        '4aae5fcf519cfa1abe53ae1e7f5ce1db' => __DIR__ . '/../..' . '/source/Boot/Minify/App.php',
+        '44ef1d8ec27ad01e41d8f15ce932b11b' => __DIR__ . '/../..' . '/source/Boot/Config.php',
+        '05de05ae944629deebff09b1e7131018' => __DIR__ . '/../..' . '/source/Boot/Helpers.php',
+        'f5000d2cafcb7460820f4facc487d84c' => __DIR__ . '/../..' . '/source/Boot/Minify/Web.php',
+        'be3e0276455264c302a711e19d872c82' => __DIR__ . '/../..' . '/source/Boot/Minify/App.php',
     );
 
     public static $prefixLengthsPsr4 = array (

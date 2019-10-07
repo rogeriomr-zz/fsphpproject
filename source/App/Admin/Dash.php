@@ -37,7 +37,7 @@ class Dash extends Admin
                 foreach ($items as $item) {
                     $list[] = [
                         "dates" => date_fmt($item->created_at, "H\hi") . " - " . date_fmt($item->updated_at, "H\hi"),
-                        "user" => ($item->user ? $item->user()->full_name() : "Guest User"),
+                        "user" => ($item->user ? $item->user()->fullName() : "Guest User"),
                         "pages" => $item->pages,
                         "url" => $item->url
                     ];

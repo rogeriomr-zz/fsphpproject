@@ -27,7 +27,7 @@ class Users extends Admin
     {
         //search redirect
         if (!empty($data["s"])) {
-            $s = filter_var($data["s"], FILTER_SANITIZE_STRIPPED);
+            $s = str_search($data["s"]);
             echo json_encode(["redirect" => url("admin/users/home/{$s}/1")]);
             return;
         }
@@ -35,8 +35,8 @@ class Users extends Admin
         $search = null;
         $users = (new User())->find();
 
-        if (!empty($data["search"]) && $data["search"] != "all") {
-            $search = filter_var($data["search"], FILTER_SANITIZE_STRIPPED);
+        if (!empty($data["search"]) && str_search($data["search"]) != "all") {
+            $search = str_search($data["search"]);
             $users = (new User())->find("MATCH(first_name, last_name, email) AGAINST(:s)", "s={$search}");
             if (!$users->count()) {
                 $this->message->info("Sua pesquisa não retornou resultados")->flash();
@@ -90,7 +90,7 @@ class Users extends Admin
             if (!empty($_FILES["photo"])) {
                 $files = $_FILES["photo"];
                 $upload = new Upload();
-                $image = $upload->image($files, $userCreate->full_name(), 600);
+                $image = $upload->image($files, $userCreate->fullName(), 600);
 
                 if (!$image) {
                     $json["message"] = $upload->message()->render();
@@ -143,7 +143,7 @@ class Users extends Admin
                 }
                 $files = $_FILES["photo"];
                 $upload = new Upload();
-                $image = $upload->image($files, $userUpdate->full_name(), 600);
+                $image = $upload->image($files, $userUpdate->fullName(), 600);
 
                 if (!$image) {
                     $json["message"] = $upload->message()->render();

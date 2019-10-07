@@ -48,7 +48,10 @@ class User extends Model
         return $find->fetch();
     }
 
-    public function full_name()
+    /**
+     * @return string
+     */
+    public function fullName(): string
     {
         return "{$this->first_name} {$this->last_name}";
     }
